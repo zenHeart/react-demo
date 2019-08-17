@@ -10,7 +10,7 @@ class LikeButton extends React.Component {
 
   render() {
     if (this.state.liked) {
-      return 'You liked this.';
+      return e('h1',{},'hello');
     }
 
     return e(
@@ -23,3 +23,4 @@ class LikeButton extends React.Component {
 
 const domContainer = document.querySelector('#like_button_container');
 ReactDOM.render(e(LikeButton), domContainer);
+ReactDOM.render(e('h1',{},'另一个挂载点'), document.querySelector('#root'));
