@@ -1,0 +1,13 @@
+.nav {
+  nav {
+    li {
+      text-align: left;
+      .active {
+        color: red;
+      }
+    }
+  }
+  .content {
+    padding: 1rem;
+  }
+}
