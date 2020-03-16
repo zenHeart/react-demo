@@ -13,3 +13,6 @@ question:
     ☐  可访问性 https://reactjs.org/docs/accessibility.html
     ☐ context 实现深层组件之间传值 https://reactjs.org/docs/context.html
     ☐ Forwarding Refs 没看懂 https://reactjs.org/docs/forwarding-refs.html
+    ☐ Hoc https://reactjs.org/docs/higher-order-components.html
+    ☐ 和其他库的集成 https://reactjs.org/docs/integrating-with-other-libraries.html
+    ☐ 优化性能 https://reactjs.org/docs/optimizing-performance.html
