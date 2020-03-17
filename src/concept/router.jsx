@@ -4,6 +4,7 @@ import Nav from '../components/Nav'
 
 import FunctionComponent from './FunctionComponent'
 import ClassComponent from './ClassComponent'
+import ClassComponentRefs from './ClassComponentRefs'
 import ClassComponentState from './ClassComponentState'
 import ClassComponentSetState from './ClassComponentSetState'
 import ClassComponentEvent from './ClassComponentEvent'
@@ -17,6 +18,8 @@ import PropsSlot from './PropsSlot'
 import LazyComponent from './LazyComponent'
 import ErrorBoundaries from './ErrorBoundaries'
 import Fragment from './Fragment'
+import Portal from './Portal'
+import ClassComponentDefault from './ClassComponentDefault'
 
 function Routers () {
   let match = useRouteMatch()
@@ -24,6 +27,8 @@ function Routers () {
     children: {
       'function-component': FunctionComponent,
       'class-component': ClassComponent,
+      'class-component-refs': ClassComponentRefs,
+      'class-component-default': ClassComponentDefault,
       'class-component-state': ClassComponentState,
       'class-component-setState': ClassComponentSetState,
       'class-component-event': ClassComponentEvent,
@@ -36,7 +41,8 @@ function Routers () {
       'props-slot': PropsSlot,
       'lazy-component': LazyComponent,
       'error-boundaries': ErrorBoundaries,
-      fragment: Fragment
+      fragment: Fragment,
+      portal: Portal
     },
     parent: match.path
   }

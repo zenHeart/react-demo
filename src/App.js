@@ -5,12 +5,14 @@ import Nav from './components/Nav';
 import JSXRouter from './jsx/router';
 import ApisRouter from './apis/router';
 import ConceptRouter from './concept/router';
+import TheoryRouter from './theory/router';
 
 let config = {
   children: {
     jsx: JSXRouter,
     apis: ApisRouter,
-    concept: ConceptRouter
+    concept: ConceptRouter,
+    theory: TheoryRouter
   }
 };
 

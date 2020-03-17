@@ -7,6 +7,7 @@ import ConditionalRender from './ConditionalRender'
 import ListRender from './ListRender'
 import DotNotation from './DotNotation'
 import Props from './Props'
+import PropsFunc from './PropsFunc'
 import Children from './Children'
 
 function Routers () {
@@ -18,6 +19,7 @@ function Routers () {
       'list-render': ListRender,
       'dot-notation': DotNotation,
       props: Props,
+      'Props-func': PropsFunc,
       children: Children
     },
     parent: match.path

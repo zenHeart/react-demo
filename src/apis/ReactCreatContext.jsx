@@ -2,7 +2,6 @@ import React from 'react'
 
 // 创建一个 context 变量组件,默认值为 dark
 const ThemeContext = React.createContext('dark')
-console.log(ThemeContext)
 function CreatElement () {
   return (
     <div>

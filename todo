@@ -1,5 +1,6 @@
 question:
     ☐ 如何优雅修改 props 的属性触发函数组件变化
+    ☐ dom 节点之前和之后的插入
     context:
         ☐ 为什么 createContext 需要初始赋值,并且在 Context.provider 中还需要赋值
         ☐ 如何修改 Context 的值
@@ -16,3 +17,6 @@ question:
     ☐ Hoc https://reactjs.org/docs/higher-order-components.html
     ☐ 和其他库的集成 https://reactjs.org/docs/integrating-with-other-libraries.html
     ☐ 优化性能 https://reactjs.org/docs/optimizing-performance.html
+    ☐ Profiler https://reactjs.org/docs/profiler.html
+    ☐ props https://reactjs.org/docs/render-props.html#caveats
+
