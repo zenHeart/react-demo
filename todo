@@ -19,4 +19,7 @@ question:
     ☐ 优化性能 https://reactjs.org/docs/optimizing-performance.html
     ☐ Profiler https://reactjs.org/docs/profiler.html
     ☐ props https://reactjs.org/docs/render-props.html#caveats
+    ☐ 工具组件 https://reactjs.org/docs/strict-mode.html
+    ☐ props 属性检查 https://reactjs.org/docs/typechecking-with-proptypes.html
+    ☐ 非受控组件 https://reactjs.org/docs/uncontrolled-components.html
 

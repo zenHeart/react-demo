@@ -3,8 +3,7 @@ import { Link, Route, useRouteMatch } from 'react-router-dom'
 
 import Nav from '../components/Nav'
 
-import ReactCreatElement from './ReactCreatElement'
-import ReactCreatContext from './ReactCreatContext'
+import ReactRouter from './React/router'
 import Render from './Render'
 import PropsChildren from './PropsChildren'
 
@@ -12,8 +11,7 @@ function Routers () {
   let match = useRouteMatch()
   let config = {
     children: {
-      creatElement: ReactCreatElement,
-      creatContext: ReactCreatContext,
+      react: ReactRouter,
       render: Render,
       'props-children': PropsChildren
     },
