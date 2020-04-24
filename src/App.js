@@ -7,6 +7,8 @@ import ApisRouter from './apis/router';
 import ConceptRouter from './concept/router';
 import TheoryRouter from './theory/router';
 import HooksRouter from './hooks/router';
+import TsxRouter from './ts/router';
+import MboxRouter from './mbox/router';
 
 let config = {
   children: {
@@ -14,7 +16,9 @@ let config = {
     apis: ApisRouter,
     concept: ConceptRouter,
     theory: TheoryRouter,
-    hooks: HooksRouter
+    hooks: HooksRouter,
+    tsx: TsxRouter,
+    mbox: MboxRouter
   }
 };
 
