@@ -15,7 +15,6 @@ let config = {
     jsx: JSXRouter,
     apis: ApisRouter,
     concept: ConceptRouter,
-    theory: TheoryRouter,
     hooks: HooksRouter,
     tsx: TsxRouter,
     mbox: MboxRouter
