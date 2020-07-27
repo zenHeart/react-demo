@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
-import { observable, computed, observe } from "mobx";
-import Fragment from "../concept/Fragment";
+import { observable, computed } from "mobx";
 
 class Todo {
   id = Math.random();
