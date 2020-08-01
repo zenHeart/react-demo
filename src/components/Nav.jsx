@@ -5,29 +5,29 @@ import { NavLink, Route } from 'react-router-dom'
 import './nav.scss'
 
 function Nav ({ children, parent = '' }) {
-  let childrenLinks = Object.keys(children)
+  
   return (
     <div className='nav'>
       <nav>
         <ul>
-          {childrenLinks.map(key => {
+          {children.map(({name}) => {
             return (
               <LinkItem
-                key={`${parent}/${key}`}
-                path={`${parent}/${key}`}
-                text={children[key].text || key}
+                key={`${parent}/${name}`}
+                path={`${parent}/${name}`}
+                text={name}
               ></LinkItem>
             )
           })}
         </ul>
       </nav>
       <div className='content'>
-        {childrenLinks.map(key => {
+        {children.map(({name,component})  => {
           return (
             <Route
-              key={key}
-              path={`${parent}/${key}`}
-              component={children[key]}
+              key={name}
+              path={`${parent}/${name}`}
+              component={component}
             />
           )
         })}
