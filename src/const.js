@@ -1,6 +1,8 @@
+import { createTagsColor, parserHtml } from './utils/utils'
+
 export function mountComponents() {
   let components = [];
-  const demos = require.context('./demos', true, /(?<!\/)[a-z-]+\.([jt]sx)?$/)
+  const demos = require.context('./demos', true, /(?<!\/)[a-z-]+\.([jt]sx|html)?$/)
   demos.keys().forEach((filename,index) => {
     const componentConfig = demos(filename)
     const name = filename.replace(/^\.\//, '').replace(/.\w+$/, '');
@@ -8,7 +10,7 @@ export function mountComponents() {
 
     let htmlInfo = {};
     if (typeof component === 'string') {
-      // htmlInfo = parserHtml(component);
+      htmlInfo = parserHtml(component);
     } else {
       htmlInfo = component.meta || {};
     }
@@ -23,3 +25,4 @@ export function mountComponents() {
   return components
 }
 export const COMPONENTS = mountComponents();
+export const TAGS_COLOR = createTagsColor(COMPONENTS);

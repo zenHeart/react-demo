@@ -4,13 +4,23 @@ import { NavLink, Route } from 'react-router-dom'
 
 import './nav.scss'
 
-function Nav ({ children, parent = '' }) {
-  
+function formatComponent(component) {
+  // html 组件使用 iframe
+  if (typeof component === 'string') {
+    debugger
+    return <iframe srcDoc="<h1>hello</h1>" />
+  } else {
+    return component;
+  }
+}
+
+function Nav({ children, parent = '' }) {
+
   return (
     <div className='nav'>
       <nav>
         <ul>
-          {children.map(({name}) => {
+          {children.map(({ name }) => {
             return (
               <LinkItem
                 key={`${parent}/${name}`}
@@ -22,12 +32,12 @@ function Nav ({ children, parent = '' }) {
         </ul>
       </nav>
       <div className='content'>
-        {children.map(({name,component})  => {
+        {children.map(({ name, component }) => {
           return (
             <Route
               key={name}
               path={`${parent}/${name}`}
-              component={component}
+              component={formatComponent(component)}
             />
           )
         })}
@@ -36,7 +46,7 @@ function Nav ({ children, parent = '' }) {
   )
 }
 
-function LinkItem ({ path, text = '' }) {
+function LinkItem({ path, text = '' }) {
   return (
     <li>
       <NavLink activeClassName='active' to={`${path}`}>

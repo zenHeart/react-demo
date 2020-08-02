@@ -1,6 +1,6 @@
 import React from 'react'
-import Examples from '../../components/Examples'
-import Example from '../../components/Example'
+import Examples from '../components/Examples'
+import Example from '../components/Example'
 
 function CreatElement () {
   return (
