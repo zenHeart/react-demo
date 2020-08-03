@@ -3,11 +3,10 @@ import { createTagsColor, parserHtml } from './utils/utils'
 export function mountComponents() {
   let components = [];
   const demos = require.context('./demos', true, /(?<!\/)[a-z-]+\.([jt]sx|html)?$/)
-  demos.keys().forEach((filename,index) => {
+  demos.keys().forEach((filename, index) => {
     const componentConfig = demos(filename)
     const name = filename.replace(/^\.\//, '').replace(/.\w+$/, '');
     const component = componentConfig.default || componentConfig;
-
     let htmlInfo = {};
     if (typeof component === 'string') {
       htmlInfo = parserHtml(component);

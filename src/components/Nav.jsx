@@ -1,14 +1,11 @@
 import React from 'react'
-
 import { NavLink, Route } from 'react-router-dom'
-
 import './nav.scss'
 
 function formatComponent(component) {
   // html 组件使用 iframe
   if (typeof component === 'string') {
-    debugger
-    return <iframe srcDoc="<h1>hello</h1>" />
+    return () =>  <iframe srcdoc={component}></iframe>
   } else {
     return component;
   }
