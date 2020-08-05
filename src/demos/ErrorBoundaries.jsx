@@ -1,75 +1,62 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-function ClassComponent () {
-  return (
-    <div>
-      <h2>申明错误组件捕获错误</h2>
-      <ul>
-        <li>
-          <h3>
-            错误组件配置 getDerivedStateFromError, componentDidCatch 钩子使用
-          </h3>
-          <ul>
-            <li>1. 无法捕获回调事件中的错误</li>
-          </ul>
-          <ErrorBoundaries fallback={<strong>---错误信息---</strong>}>
-            <BugComponent />
-          </ErrorBoundaries>
-        </li>
-      </ul>
-    </div>
-  )
-}
-
-class BugComponent extends React.Component {
-  constructor (props) {
-    super(props)
+// 1. 声明 error 处理的插槽组件
+class ErrorBoundary extends React.Component {
+  constructor() {
+    super();
     this.state = {
-      error: false
+      error: null,
+      info: null
     }
   }
-  render () {
-    if (this.state.error) {
-      throw new Error('触发错误')
-    }
-    return (
-      <button
-        onClick={() =>
-          this.setState({
-            error: true
-          })
-        }
-      >
-        点击触发错误
-      </button>
-    )
-  }
-}
-
-class ErrorBoundaries extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      hasError: false
-    }
-  }
-
-  componentDidCatch (error, errorInfo) {
-    // 处理错误信息
+  // 2. 挂载 error 处理事件
+  componentDidCatch(error, info) {
     this.setState({
-      hasError: true
+      error,
+      info
     })
+    console.log('error:', arguments)
   }
-  render () {
-    if (this.state.hasError) {
-      // 显示错误组件
-      return this.props.fallback || <span style={{ color: 'red' }}>error</span>
+  render() {
+    // 3. 处理错误时的显示策略
+    if (this.state.error) {
+      return (
+        <div>
+          <h2>Something went wrong.</h2>
+          <details style={{ whiteSpace: 'pre-wrap' }}>
+            {this.state.error && this.state.error.toString()}
+            <br />
+            {this.state.info.componentStack}
+          </details>
+        </div>
+      )
+      // 正常返回插槽节点
     }
-    // 正常显示
     return this.props.children
   }
 }
 
-ClassComponent.text = 'Error Boundaries 处理错误'
 
-export default ClassComponent
+function CountButton() {
+  let [count, setCount] = useState(1);
+  let changeCount = () => {
+    setCount(count + 1)
+  }
+  if (count > 5) {
+    throw new Error('count error')
+  } else return <button onClick={changeCount}>{count}</button>
+}
+
+// 4. 应用中使用错误处理组价
+
+function App(props) {
+  return (<div>
+    <h1>使用 componentDidCatch 补货错误</h1>
+    <ErrorBoundary>
+      <CountButton></CountButton>
+    </ErrorBoundary>
+  </div>)
+}
+
+
+export default App;
