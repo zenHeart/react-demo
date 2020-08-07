@@ -1,10 +1,7 @@
 question:
     ☐ 如何优雅修改 props 的属性触发函数组件变化
     ☐ dom 节点之前和之后的插入
-    context:
-        ☐ 为什么 createContext 需要初始赋值,并且在 Context.provider 中还需要赋值
-        ☐ 如何修改 Context 的值
-        ☐ 为什么类需要使用静态属性 contextType 显示绑定 context 才可使用 this.context 访问值
+     
     错误处理:
         ☐ errorbound 无法处理事件中的错误等需要如何优化
 
