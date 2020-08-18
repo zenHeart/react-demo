@@ -1,0 +1,36 @@
+---
+tags: [mobx model]
+---
+
+<script src="https://unpkg.com/mobx/lib/mobx.umd.js"></script>
+<div id="app">
+
+</div>
+<script>
+  const { observable, autorun }  = mobx
+  const todoStore = observable({
+    todos: [],
+    get completedCount() {
+      return this.todos.filter((todo) => todo.completed).length
+    }
+  })
+
+  let mountEl = document.getElementById('app')
+  function updateTodo() {
+      // debugger
+      mountEl.innerHTML = `
+        ${todoStore.todos.map(todo => '<div>'+JSON.stringify(todo)+'</div>').join('')}
+      `
+  }
+
+  autorun(function() {
+    console.log('complted %d of %d items', todoStore.completedCount, todoStore.todos.length)
+  })
+  autorun(updateTodo)
+
+  todoStore.todos[0] = {
+    title:" take a walk",
+    completed: false
+  }
+  todoStore.todos[0].completed= true
+</script>

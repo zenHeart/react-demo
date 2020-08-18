@@ -1,0 +1,45 @@
+---
+tags: [mobx observer]
+---
+
+<script src="https://unpkg.com/mobx/lib/mobx.umd.js"></script>
+<div id="app">
+  <h1>验证 observable 支持的值类型</h1>
+  <button class="primitive" >box 设置原始值,set 进行修改,get 获取结果 </button>
+  <button class="array" >array 修改 </button>
+  <button class="object" >对象修改</button>
+</div>
+<script>
+  const { observable, autorun } = mobx
+  let store = observable.box(1);
+  let store1 = observable([1,2,3]);
+  let store2 = observable({
+    a: 1
+  });
+  
+  autorun(() => {
+    console.log('autorun' , store.get(), store1,store2)
+  })
+
+  let els =  {
+    'primitive': () => {
+      let a = store.get();
+      store.set(++a)
+      console.log('store', store)
+    },
+    'array': () => {
+      store1[1] =12;
+      store1.push(new Date())
+      console.log('store1', store1)
+    },
+    'object': () => {
+      store2.a = 'test'
+      console.log('store2', store2);
+    }
+  }
+  Object.keys(els).map(selctor => {
+    let el = document.getElementsByClassName(selctor)[0];
+    el.onclick = els[selctor];
+  })
+
+</script>

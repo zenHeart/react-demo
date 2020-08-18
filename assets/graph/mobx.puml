@@ -1,0 +1,44 @@
+@startuml
+
+title mobx 心智模型
+
+state  "Actions(动作)" as a
+a: 修改状态的行为, 用户事件,数据推送等
+
+a -right-> s: 动作触发状态变化\n\
+例如 excel 中增删改表格的操作
+
+
+state  "State(状态)" as s
+s: 应用的数据模型
+
+s -right-> d: 从状态中派生的逻辑
+
+state "derivations(状态派生)" as d {
+  state  "Computed Values(计算值)" as c
+  c: 基于状态派生的值
+  c: 例如排名就是从学生成绩数据中衍生的状态
+
+  c -->r: 计算值触发响应\n\
+  例如排名变化, 会影响 excel 的排序显示
+
+  state  "Reactions(响应)" as r
+  r: 状态或计算值变化触发的影响
+  r: excel 表格数据变化触发 UI 修改 、自动保存就是状态\n\
+  产生的影响
+
+}
+d: 状态派生基于原始状态衍生的变化
+
+
+d -left-> a: 驱动动作,触发新的状态变化
+note on link
+例如修改学生成绩的动作,会触发自动保存的响应
+该响应会产生更新动作,导致表格修改时间的状态变化
+end note
+
+legend
+核心原则
+#状态派生自动触发
+endlegend
+@enduml

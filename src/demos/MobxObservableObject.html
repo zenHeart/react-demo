@@ -1,0 +1,42 @@
+---
+tags: [mobx observer]
+---
+<script src="https://unpkg.com/mobx/lib/mobx.umd.js"></script>
+<script>
+const { observable, autorun, action } = mobx
+// 验证 observable 对深层属性的监听
+var person = observable(
+    {
+        name: "John",
+        age: 42,
+        showAge: false,
+        nest: {
+          a: 1
+        },
+        // computed property:
+        get labelText() {
+            return this.showAge ? `${this.name} (age: ${this.age})` : this.name
+        },
+        setAge1(age) {
+            this.age = age
+        },
+        setAge(age) {
+            this.age = age
+        },
+        
+    },
+    // TODO: 此处申明的意义
+    {
+        setAge: action,
+    },
+    // TODO: 此值的使用场景
+    { deep: true }
+)
+
+autorun(() => {
+  console.log('---log---,',person.name, person.age, person.nest)
+})
+
+person.name = "Dave"
+person.setAge(21)
+</script>
