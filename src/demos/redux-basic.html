@@ -1,0 +1,35 @@
+---
+tags: [redux]
+---
+
+<script src="https://unpkg.com/redux"></script>
+
+<script>
+    const { createStore } = Redux
+    // 定义状态迁移函数
+    function StateReduce(state, action) {
+        console.log('---res--',arguments);
+        switch(action.label) {
+            case 1:
+            return 1;
+            default:
+            return state
+        }
+    }
+    // 定义初始状态
+    let store = createStore(StateReduce, {
+        type: 'init',
+        data: [1,2]
+    });
+    // 获取状态
+    console.log(store.getState())
+
+    // 发送事件修改状态
+    store.dispatch({
+        type: 1,
+        label: 1
+    })
+    console.log(store.getState())
+
+
+</script>
