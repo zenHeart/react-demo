@@ -1,0 +1,37 @@
+---
+tags: [redux, applymiddleware]
+---
+
+<script src="https://unpkg.com/redux"></script>
+<script>
+  const { createStore, applyMiddleware } = Redux;
+
+  function logger({ getState }) {
+    console.log('state before', getState());
+
+    return (next) => (action) => {
+      console.log('next', next.toString());
+      let state = next(action);
+
+      console.log('state after', state,action, getState());
+      return state;
+    };
+  }
+  // 之前的状态事件
+  function count(state = 0, action) {
+    switch (action.type) {
+      case 'add':
+        return ++state;
+      default:
+        return state;
+    }
+  }
+
+  let state = createStore(count, applyMiddleware(logger));
+  state.dispatch({
+      type: 'add'
+  })
+  state.dispatch({
+      type: 'add'
+  })
+</script>
