@@ -1,0 +1,25 @@
+---
+tags: [theory, createElement]
+---
+
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+<div id="root"></div>
+</div>
+<div id="comment"><!-- comment --></div>
+<script>
+  let { Component } = React;
+
+  // 创建类父组件
+  class C extends Component {
+    render() {
+      return '1'
+    }
+  };
+  let c = new C();
+  console.dir(c)
+  
+  const res = ReactDOM.render(c,document.getElementById('root'),function log() {console.log(this)})
+  console.dir(res)
+</script>
