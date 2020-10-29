@@ -1,0 +1,43 @@
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+<div id="root"></div>
+</div>
+<script>
+  const { createElement }  = React
+  class C extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        count: 0
+      };
+    }
+    add = () => {
+      this.setState((state) => ({
+        state: state.count++
+      }))
+    }
+    render() {
+      return {
+        $$typeof: Symbol.for('react.element'),
+        type: 'h1',
+        props: {
+          onClick: this.add,
+          children: [
+            1,
+            this.state.count
+          ]
+        },
+        ref: null
+      }
+    }
+  };
+  // 1. 创建 vnode
+  c = createElement(C,{
+  })
+  console.dir(c)
+  
+  // 2. 挂载节点, 返回生成的 dom 对象
+  const res = ReactDOM.render(c ,document.getElementById('root'),function log() {console.log(this)})
+  console.dir(res)
+</script>
