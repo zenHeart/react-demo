@@ -1,0 +1,23 @@
+<script src="https://unpkg.com/react@15/dist/react.js"></script>
+<script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+
+<div id="root"></div>
+<script>
+  let { createElement } = React;
+  let vnode = {
+    $$typeof: Symbol.for("react.element"),
+    type: 'h1',
+    props: {
+      children: [ 1 ]
+    },
+    ref: null
+  }
+
+
+  // 挂载节点, 返回生成的 dom 对象
+  const res = ReactDOM.render(vnode,document.getElementById('root'),function log() {
+    debugger
+    console.log(this)
+  })
+  console.dir(res)
+</script>
