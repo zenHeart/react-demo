@@ -9,12 +9,23 @@
       3. props
       4. refs
       5. 其他
-   4. vdom 类型
-      1. host element 宿主元素处理
-      2. function component
-      3. class component
-      4. jsx syntax sugar
-   5. vdom 的创建，createElement
+   4. vdom 核心属性详解,参考 https://gist.github.com/sebmarkbage/fcb1b6ab493b0c77d589
+      1. type 的类型
+         1. host element 宿主元素处理
+         2. function component
+         3. class component
+         4.  jsx syntax sugar
+      2. props 的核心属性
+         1. children 的类型
+            1. root element
+            2. type 类型
+            3. 文本
+            4. fragment
+   5. vdom 的创建
+      1. createElement
+      2. createFactory
+      3. jsx 语法糖
+      4. createClass 和 React.component, 
 2. render 函数
    1. 不同类型 vdom 实例创建流程
       1. function component

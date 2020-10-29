@@ -1,0 +1,21 @@
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+<div id="root"></div>
+<script>
+  let { createElement } = React;
+
+  const res = ReactDOM.render({
+    $$typeof: Symbol.for('react.element'),
+    type: 'h1',
+    props: {
+        a: 1,
+        children: [ 1 ]
+    },
+    ref: null
+  },document.getElementById('root'),function log() {
+      debugger
+      console.log(this)
+    })
+console.dir(res)
+</script>
