@@ -1,6 +1,12 @@
-# 整体流程简述
+# 概览
+react 如何解决 UI 问题的
 
-1. react element
+1. 从 `v = f(d)` 开始，核心概念
+2. 组件模型的抽象
+   1. component 的类型
+
+
+3. react element
    1. 基础概念
    2. 为什么需要 vdom
    3. vdom 的基本结构
@@ -26,7 +32,7 @@
       2. createFactory
       3. jsx 语法糖
       4. createClass 和 React.component, 
-2. render 函数
+4. render 函数
    1. 不同类型 vdom 实例创建流程
       1. function component
       2. class component
@@ -36,12 +42,12 @@
       2. forceUpdate
       3. key change
    4. reconciler 跨平台实现原理
-3. acync render 产生的 fiber 架构，实现 incremental redner
+5. acync render 产生的 fiber 架构，实现 incremental redner
    1. 暂停任务并恢复的机制
    2. 区分任务优先级
    3. 重用之前的工作
    4. 废除之前的工作
-4. 其他细节
+6. 其他细节
 
 
 ## 参考资料

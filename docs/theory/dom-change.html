@@ -1,0 +1,31 @@
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+<div id="root"></div>
+</div>
+<script>
+  const { createElement }  = React
+  class A extends React.Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        show: true
+      }
+    }
+    trigger = () =>  {
+      this.setState((state, props) => {
+      return {
+        show: !state.show
+      }
+      })
+    }
+    render() {
+      return createElement('div', {} ,
+        createElement('button', {
+          onClick: this.trigger.bind(this)
+        },'test'),
+        this.state.show? createElement('h1', {},'title'): '')
+    }
+  }
+  const res = ReactDOM.render(createElement(A),document.getElementById('root'),function log() {console.log(this)})
+</script>
