@@ -87,6 +87,11 @@
     5. `popInteractions(prevInteractions);` ??
     6. `finishSyncRender(root );` 完成同步渲染 
        1. `commitRoot(root);` 提交 fiberRoot 节点执行渲染逻辑
+       2. `runWithPriority$1(ImmediatePriority,commitRootImpl.bind(null, root, renderPriorityLevel))` 按照优先级触发 `commitRootImpl` 函数实现渲染，实际指向为 **unstable_runWithPriority** 函数
+          1. 触发 commitRootImpl 执行，参考步骤 4
+4. `commitRootImpl(root, renderPriorityLevel)` 
+   1. 根据 dev 区分不同模式捕获错误
+   2. 执行 `commitMutationEffects(root, renderPriorityLevel)` 执行渲染
 
 
 ### 问题

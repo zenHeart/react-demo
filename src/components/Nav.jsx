@@ -32,7 +32,6 @@ function Nav({ children = [], parent = '',tagsColor }) {
               >
                 <Tags onClickTag={handleTagChange} tagsColor={tagsColor} tags={tags}></Tags>
               </LinkItem>
-            
             )
           })}
         </ul>

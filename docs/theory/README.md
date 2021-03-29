@@ -53,4 +53,5 @@ react 如何解决 UI 问题的
 ## 参考资料
 * [async render 阶段 demo](https://gist.github.com/acdlite/f31becd03e2f5feb9b4b22267a58bc1f?fbclid=IwAR3pSSlGCCXqYhdEkGdl_l0zWEMFzap2mRkNbVmPeL7gIleevjKO13Nqw1k) 
 * [fiber wiki](https://en.m.wikipedia.org/wiki/Fiber_(computer_science))
-
+* [递归函数断点技巧](https://twitter.com/dan_abramov/status/699397675326795776)
+  * 采用 `group,groupEnd` 实现

@@ -1,0 +1,28 @@
+---
+tags: [theory, createElement]
+---
+
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+<div id="root"></div>
+</div>
+<script>
+  debugger
+  const res = ReactDOM.render({
+    $$typeof: Symbol.for('react.element'),
+    props: {className: "test", a: 12, children: [
+      'hello',
+      {
+        $$typeof: Symbol.for('react.element'),
+        type: 'strong',
+        ref: null,
+        props: {
+          children: ' world!'
+        }
+      }
+  ]},
+    ref: null,
+    type: "h1"
+  },document.getElementById('root'),function log() {console.log(this)})
+</script>
