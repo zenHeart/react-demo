@@ -3,7 +3,6 @@ import { NavLink, Route,Routes } from 'react-router-dom'
 import Tags from './Tags'
 import './nav.less'
 import { isJsxFragment } from 'typescript'
-import Bracket from '../demos/Bracket'
 function formatComponent(component: any) {
   // html 组件使用 iframe
   if (typeof component === 'string') {
@@ -28,7 +27,7 @@ function Nav({ children, parent = '',tagsColor }) {
         <ul>
           {/* @ts-ignore */}
           {children.filter(({tags}) => filterTag?(tags||[]).includes(filterTag):true)
-          .map(({ name ,tags}) => {
+          .map(({ name ,tags}: {name: string, tags: string[]}) => {
             return (
             <LinkItem
                 key={`${parent}/${name}`}
@@ -43,7 +42,7 @@ function Nav({ children, parent = '',tagsColor }) {
       </nav>
       <div className='content'>
         <Routes>
-          { children.map(({ name, component }) => {
+          { children.map(({ name, component }: {name: string, component: any}) => {
               return (
                 <Route
                   key={name}
