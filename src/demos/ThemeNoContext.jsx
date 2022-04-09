@@ -1,7 +1,7 @@
 import React from 'react'
 import Example from '../components/Example'
 import Examples from '../components/Examples'
-import './ThemeNoContext.scss'
+import './ThemeNoContext.less'
 
 
 

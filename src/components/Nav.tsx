@@ -1,27 +1,32 @@
 import React,{ useState } from 'react'
-import { NavLink, Route } from 'react-router-dom'
+import { NavLink, Route,Routes } from 'react-router-dom'
 import Tags from './Tags'
-import './nav.scss'
-
-function formatComponent(component) {
+import './nav.less'
+import { isJsxFragment } from 'typescript'
+import Bracket from '../demos/Bracket'
+function formatComponent(component: any) {
   // html 组件使用 iframe
   if (typeof component === 'string') {
-    return () =>  <iframe srcdoc={component}></iframe>
+    // @ts-ignore
+    return <iframe srcdoc={component}/>
   } else {
-    return component;
+    return React.createElement(component)
   }
 }
 
-
-function Nav({ children = [], parent = '',tagsColor }) {
+// @ts-ignore
+function Nav({ children, parent = '',tagsColor }) {
   let [filterTag,setTag] = useState(new URLSearchParams(window.location.search).get("tag"));
+  // @ts-ignore
   const handleTagChange = (tag) => {
       setTag(tag);
   }
+  console.log('children', children)
   return (
     <div className='nav'>
       <nav>
         <ul>
+          {/* @ts-ignore */}
           {children.filter(({tags}) => filterTag?(tags||[]).includes(filterTag):true)
           .map(({ name ,tags}) => {
             return (
@@ -37,23 +42,26 @@ function Nav({ children = [], parent = '',tagsColor }) {
         </ul>
       </nav>
       <div className='content'>
-        {children.map(({ name, component }) => {
-          return (
-            <Route
-              key={name}
-              path={`${parent}/${name}`}
-              component={formatComponent(component)}
-            />
-          )
-        })}
+        <Routes>
+          { children.map(({ name, component }) => {
+              return (
+                <Route
+                  key={name}
+                  path={`${parent}/${name}`}
+                  element={formatComponent(component)}
+                />
+              )
+            })} 
+        </Routes>
       </div>
     </div>
   )
 }
-
+// @ts-ignore
 function LinkItem({ path, text = '',children }) {
   return (
     <li>
+      {/* @ts-ignore  */}
       <NavLink activeClassName='active' to={`${path}`}>
         {text || path}  {children}
       </NavLink>

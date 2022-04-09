@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Modal from '../components/Modal.jsx'
+import Modal from '../components/Modal.tsx'
 
 function Portal () {
   return (

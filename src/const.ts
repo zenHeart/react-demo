@@ -1,10 +1,15 @@
 import { createTagsColor, parserHtml } from './utils/utils'
 
 export function mountComponents() {
-  let components = [];
-  const demos = require.context('./demos', true, /(?<!\/)[a-z-]+\.([jt]sx|html)?$/)
-  demos.keys().forEach((filename, index) => {
-    const componentConfig = demos(filename)
+  let components: unknown[] = [];
+  const reactComponents = import.meta.globEager('./demos/*.{jsx,tsx}')
+  const htmlComponents = import.meta.globEager('./demos/*.html', { as: 'raw' })
+  const demos = {
+    ...reactComponents,
+    ...htmlComponents
+  }
+  Object.keys(demos).forEach((filename, index) => {
+    const componentConfig = demos[filename]
     const name = filename.replace(/^\.\//, '').replace(/.\w+$/, '');
     const component = componentConfig.default || componentConfig;
     let htmlInfo = {};

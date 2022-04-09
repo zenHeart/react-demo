@@ -1,6 +1,10 @@
 import React from 'react'
-import './Modal.scss'
-function Modal (props) {
+import './Modal.less'
+interface ModalProps {
+  text: string
+  closeHandle: React.MouseEventHandler<HTMLSpanElement>
+}
+function Modal (props: React.PropsWithChildren<ModalProps>) {
   return (
     <div className='Modal'>
       <div className='content'>

@@ -1,7 +1,10 @@
+import './Example.less'
 import React from 'react'
+interface ExampleProps {
+  text: string,
 
-import './Example.scss'
-function Example (props) {
+}
+function Example (props: React.PropsWithChildren<ExampleProps>) {
   return (
     <section className='Example'>
       <h3>{props.text}</h3>
