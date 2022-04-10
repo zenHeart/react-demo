@@ -60,8 +60,7 @@ function Nav({ children, parent = '',tagsColor }) {
 function LinkItem({ path, text = '',children }) {
   return (
     <li>
-      {/* @ts-ignore  */}
-      <NavLink activeClassName='active' to={`${path}`}>
+      <NavLink  className={({ isActive }) => isActive ? 'active' : undefined}  to={`${path}${window.location.search}`}>
         {text || path}  {children}
       </NavLink>
     </li>

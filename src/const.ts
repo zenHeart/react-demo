@@ -2,8 +2,8 @@ import { createTagsColor, parserHtml } from './utils/utils'
 
 export function mountComponents() {
   let components: unknown[] = [];
-  const reactComponents = import.meta.globEager('./demos/*.{jsx,tsx}')
-  const htmlComponents = import.meta.globEager('./demos/*.html', { as: 'raw' })
+  const reactComponents = import.meta.globEager('./demos/**/*.{jsx,tsx}')
+  const htmlComponents = import.meta.globEager('./demos/**/*.html', { as: 'raw' })
   const demos = {
     ...reactComponents,
     ...htmlComponents
