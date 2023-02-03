@@ -1,5 +1,10 @@
 import React from 'react'
 
+function Cp1(props = {}) {
+  console.log('props', props)
+  return <p>{ JSON.stringify(props)}</p>
+}
+
 function D1 () {
   return (
     <div>
@@ -44,6 +49,13 @@ function D1 () {
         </li>
         <li>
           <h3>...会自动扩展属性赋值</h3>
+        </li>
+
+        <li>
+          <h3>属性自动赋值为空对象</h3>
+          <Cp1 options={{
+            a: 1
+          }} {...{options:{b:2}, b: 2}} />
         </li>
       </ul>
     </div>
