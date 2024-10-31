@@ -2,8 +2,8 @@ import { createTagsColor, parserHtml } from './utils/utils'
 
 export function mountComponents() {
   let components: unknown[] = [];
-  const reactComponents = import.meta.globEager('./demos/**/*.{jsx,tsx}')
-  const htmlComponents = import.meta.globEager('./demos/**/*.html', { as: 'raw' })
+  const reactComponents = import.meta.glob('./demos/**/*.{jsx,tsx}',  { eager: true })
+  const htmlComponents = import.meta.glob('./demos/**/*.html', { eager: true, as: 'raw' })
   const demos = {
     ...reactComponents,
     ...htmlComponents
@@ -11,11 +11,13 @@ export function mountComponents() {
   Object.keys(demos).forEach((filename, index) => {
     const componentConfig = demos[filename]
     const name = filename.replace(/^\.\//, '').replace(/.\w+$/, '');
+    // @ts-ignore
     const component = componentConfig.default || componentConfig;
     let htmlInfo = {};
     if (typeof component === 'string') {
       htmlInfo = parserHtml(component);
     } else {
+      // @ts-ignore
       htmlInfo = component.meta || {};
     }
 
