@@ -4,6 +4,7 @@ export function mountComponents() {
   let components: unknown[] = [];
   const reactComponents = import.meta.glob('./demos/**/*.{jsx,tsx}',  { eager: true })
   const htmlComponents = import.meta.glob('./demos/**/*.html', { eager: true, as: 'raw' })
+
   const demos = {
     ...reactComponents,
     ...htmlComponents

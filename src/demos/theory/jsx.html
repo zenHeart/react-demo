@@ -1,0 +1,19 @@
+---
+tags: [ theory, jsx]
+---
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+<div id="root"></div>
+<script>
+  const { createElement }  = React
+  function App() {
+    return createElement(
+      'h1',
+      undefined,
+      'hello world'
+    )
+  }
+  const res = ReactDOM.render(createElement(App) ,document.getElementById('root'))
+</script>
