@@ -1,234 +1,323 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>React MVP</title>
-</head>
-<body>
-  <div id="root"></div>
-  <script>
-    // Create React Element (Virtual DOM node)
-    function createReactElement(type, props, ...children) {
-      return {
-        type,
-        props: {
-          ...props,
-          children: children.map(child =>
-            typeof child === 'object' ? child : createTextElement(child)
+  <head>
+    <meta charset="UTF-8" />
+    <title>React MVP Implementation Demo</title>
+    <style>
+      .demo-section {
+        margin: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      .demo-title {
+        color: #333;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+      }
+      .demo-description {
+        color: #666;
+        font-style: italic;
+        margin-bottom: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="react.mvp.js"></script>
+
+    <script>
+      // Demo components are organized from basic to advanced concepts
+
+      function BasicDemo() {
+        return createElement(
+          "div",
+          { className: "demo-section" },
+          createElement(
+            "h2",
+            { className: "demo-title" },
+            "1. Basic Element Rendering"
           ),
-        },
-      };
-    }
+          createElement(
+            "p",
+            { className: "demo-description" },
+            "Demonstrates createElement and basic element composition"
+          ),
+          createElement(
+            "div",
+            { className: "demo-content" },
+            createElement("h3", null, "Hello React MVP"),
+            createElement("p", null, "This is a basic element rendering demo")
+          )
+        );
+      }
 
-    function createTextElement(text) {
-      return {
-        type: 'TEXT_ELEMENT',
-        props: {
-          nodeValue: text,
-          children: [],
-        },
-      };
-    }
+      function PropsDemo() {
+        return createElement(
+          "div",
+          { className: "demo-section" },
+          createElement(
+            "h2",
+            { className: "demo-title" },
+            "2. Props and Event Handling"
+          ),
+          createElement(
+            "p",
+            { className: "demo-description" },
+            "Shows how props and event handlers work"
+          ),
+          createElement(
+            "div",
+            { className: "demo-content" },
+            createElement(
+              "button",
+              {
+                onClick: () => alert("Button clicked!"),
+                style: {
+                  padding: "10px",
+                  backgroundColor: "blue",
+                  color: "white",
+                },
+              },
+              "Click me!"
+            )
+          )
+        );
+      }
 
-    // Global variables to track work
-    let nextUnitOfWork = null;
-    let currentRoot = null;
-    let wipRoot = null;
-    let deletions = null;
+      function StateDemo() {
+        const [count, setCount] = useState(0);
+        return createElement(
+          "div",
+          { className: "demo-section" },
+          createElement(
+            "h2",
+            { className: "demo-title" },
+            "3. State Management with useState"
+          ),
+          createElement(
+            "p",
+            { className: "demo-description" },
+            "Demonstrates component state management using the useState hook"
+          ),
+          createElement(
+            "div",
+            { className: "demo-content" },
+            createElement("h3", null, `Count: ${count}`),
+            createElement(
+              "button",
+              {
+                onClick: () => setCount(count + 1),
+                style: { padding: "5px" },
+              },
+              "Increment"
+            )
+          )
+        );
+      }
 
-    function createRoot(container) {
-      return {
-        render(element) {
-          wipRoot = {
-            dom: container,
-            props: {
-              children: [element],
+      function EffectDemo() {
+        const [time, setTime] = useState(new Date().toLocaleTimeString());
+
+        useEffect(() => {
+          const timer = setInterval(() => {
+            setTime(new Date().toLocaleTimeString());
+          }, 1000);
+          return () => clearInterval(timer);
+        }, []);
+
+        return createElement(
+          "div",
+          { className: "demo-section" },
+          createElement(
+            "h2",
+            { className: "demo-title" },
+            "4. Side Effects with useEffect"
+          ),
+          createElement(
+            "p",
+            { className: "demo-description" },
+            "Shows how to handle side effects and cleanup with useEffect"
+          ),
+          createElement(
+            "div",
+            { className: "demo-content" },
+            createElement("h3", null, "Current time:"),
+            createElement("p", null, time)
+          )
+        );
+      }
+
+      function ReducerDemo() {
+        const initialState = { count: 0 };
+        const reducer = (state, action) => {
+          switch (action.type) {
+            case "increment":
+              return { count: state.count + 1 };
+            case "decrement":
+              return { count: state.count - 1 };
+            default:
+              return state;
+          }
+        };
+
+        const [state, dispatch] = useReducer(reducer, initialState);
+
+        return createElement(
+          "div",
+          { className: "demo-section" },
+          createElement(
+            "h2",
+            { className: "demo-title" },
+            "5. Complex State Management with useReducer"
+          ),
+          createElement(
+            "p",
+            { className: "demo-description" },
+            "Demonstrates complex state management using useReducer"
+          ),
+          createElement(
+            "div",
+            { className: "demo-content" },
+            createElement("h3", null, `Count: ${state.count}`),
+            createElement(
+              "button",
+              {
+                onClick: () => dispatch({ type: "decrement" }),
+                style: { marginRight: "10px" },
+              },
+              "-"
+            ),
+            createElement(
+              "button",
+              {
+                onClick: () => dispatch({ type: "increment" }),
+              },
+              "+"
+            )
+          )
+        );
+      }
+
+      function MemoDemo() {
+        const [number, setNumber] = useState(0);
+
+        const expensiveCalculation = useMemo(() => {
+          let result = 0;
+          for (let i = 0; i < number * 1000; i++) {
+            result += i;
+          }
+          return result;
+        }, [number]);
+
+        return createElement(
+          "div",
+          { className: "demo-section" },
+          createElement(
+            "h2",
+            { className: "demo-title" },
+            "6. Memoization with useMemo"
+          ),
+          createElement(
+            "p",
+            { className: "demo-description" },
+            "Shows performance optimization using useMemo"
+          ),
+          createElement(
+            "div",
+            { className: "demo-content" },
+            createElement("input", {
+              type: "number",
+              value: number,
+              onInput: (e) => setNumber(parseInt(e.target.value)),
+            }),
+            createElement("p", null, `Calculated: ${expensiveCalculation}`)
+          )
+        );
+      }
+
+      const ThemeContext = createContext("light");
+
+      function ThemedComponent() {
+        const theme = useContext(ThemeContext);
+        return createElement(
+          "div",
+          {
+            style: {
+              backgroundColor: theme === "light" ? "#fff" : "#333",
+              color: theme === "light" ? "#000" : "#fff",
+              padding: "10px",
             },
-            alternate: currentRoot,
-          };
-          deletions = [];
-          nextUnitOfWork = wipRoot;
-        },
-      };
-    }
-
-    function workLoop(deadline) {
-      let shouldYield = false;
-      
-      while (nextUnitOfWork && !shouldYield) {
-        nextUnitOfWork = performUnitOfWork(nextUnitOfWork);
-        shouldYield = deadline.timeRemaining() < 1;
+          },
+          `Current theme: ${theme}`
+        );
       }
 
-      // If we finished all work, commit the root
-      if (!nextUnitOfWork && wipRoot) {
-        commitRoot();
+      function ContextDemo() {
+        const [theme, setTheme] = useState("light");
+
+        return createElement(
+          "div",
+          { className: "demo-section" },
+          createElement(
+            "h2",
+            { className: "demo-title" },
+            "7. Context API Demo"
+          ),
+          createElement(
+            "p",
+            { className: "demo-description" },
+            "Demonstrates component communication through Context"
+          ),
+          createElement(
+            ThemeContext.Provider,
+            { value: theme },
+            createElement(
+              "div",
+              { className: "demo-content" },
+              createElement(
+                "button",
+                {
+                  onClick: () =>
+                    setTheme((t) => (t === "light" ? "dark" : "light")),
+                  style: { marginBottom: "10px" },
+                },
+                "Toggle Theme"
+              ),
+              createElement(ThemedComponent, null)
+            )
+          )
+        );
       }
 
-      requestIdleCallback(workLoop);
-    }
-
-    function commitRoot() {
-      // First handle deletions
-      deletions.forEach(commitWork);
-      // Then commit the new/updated nodes
-      commitWork(wipRoot.child);
-      currentRoot = wipRoot;
-      wipRoot = null;
-    }
-
-    function commitWork(fiber) {
-      if (!fiber) {
-        return;
+      // Main App Component - now just combines all demos
+      function App() {
+        return createElement(
+          "div",
+          null,
+          createElement(
+            "h1",
+            {
+              style: {
+                textAlign: "center",
+                color: "#333",
+                marginBottom: "30px",
+              },
+            },
+            "React MVP Implementation Demos"
+          ),
+          createElement(BasicDemo),
+          createElement(PropsDemo),
+          createElement(StateDemo),
+          createElement(EffectDemo),
+          createElement(ReducerDemo),
+          createElement(MemoDemo),
+          createElement(ContextDemo)
+        );
       }
 
-      // Find the nearest parent with a DOM node
-      let domParentFiber = fiber.parent;
-      while (domParentFiber && !domParentFiber.dom) {
-        domParentFiber = domParentFiber.parent;
-      }
-      const domParent = domParentFiber.dom;
-
-      // Handle DOM operations based on effect tag
-      if (fiber.dom) {
-        domParent.appendChild(fiber.dom);
-      }
-
-      // Recursively commit children and siblings
-      commitWork(fiber.child);
-      commitWork(fiber.sibling);
-    }
-
-    function performUnitOfWork(fiber) {
-      const isFunctionComponent = typeof fiber.type === 'function';
-
-      if (isFunctionComponent) {
-        updateFunctionComponent(fiber);
-      } else {
-        updateHostComponent(fiber);
-      }
-
-      // Return next unit of work
-      if (fiber.child) {
-        return fiber.child;
-      }
-
-      let nextFiber = fiber;
-      while (nextFiber) {
-        if (nextFiber.sibling) {
-          return nextFiber.sibling;
-        }
-        nextFiber = nextFiber.parent;
-      }
-    }
-
-    function updateFunctionComponent(fiber) {
-      // Execute the function component to get its children
-      const children = [fiber.type(fiber.props)];
-      reconcileChildren(fiber, children);
-    }
-
-    function updateHostComponent(fiber) {
-      // Create DOM node if it doesn't exist
-      if (!fiber.dom) {
-        fiber.dom = createDom(fiber);
-      }
-      // Reconcile children
-      reconcileChildren(fiber, fiber.props.children);
-    }
-
-    function createDom(fiber) {
-      const dom =
-        fiber.type === 'TEXT_ELEMENT'
-          ? document.createTextNode('')
-          : document.createElement(fiber.type);
-
-      updateDom(dom, {}, fiber.props);
-      return dom;
-    }
-
-    function updateDom(dom, prevProps, nextProps) {
-      // Handle regular props
-      const isProperty = key => key !== 'children';
-      
-      // Remove old properties
-      Object.keys(prevProps)
-        .filter(isProperty)
-        .forEach(name => {
-          if (!(name in nextProps)) {
-            dom[name] = '';
-          }
-        });
-
-      // Set new or changed properties
-      Object.keys(nextProps)
-        .filter(isProperty)
-        .forEach(name => {
-          if (prevProps[name] !== nextProps[name]) {
-            if (name === 'nodeValue') {
-              dom.textContent = nextProps[name];
-            } else {
-              dom[name] = nextProps[name];
-            }
-          }
-        });
-    }
-
-    function reconcileChildren(wipFiber, elements) {
-      let index = 0;
-      let oldFiber = wipFiber.alternate && wipFiber.alternate.child;
-      let prevSibling = null;
-
-      while (index < elements.length || oldFiber) {
-        const element = elements[index];
-        let newFiber = null;
-
-        // Create new fiber
-        if (element) {
-          newFiber = {
-            type: element.type,
-            props: element.props,
-            parent: wipFiber,
-            dom: null,
-            alternate: oldFiber,
-            effectTag: 'PLACEMENT',
-          };
-        }
-
-        // Link the fibers
-        if (index === 0) {
-          wipFiber.child = newFiber;
-        } else if (element && prevSibling) {
-          prevSibling.sibling = newFiber;
-        }
-
-        oldFiber = oldFiber?.sibling;
-        prevSibling = newFiber;
-        index++;
-      }
-    }
-
-    // Start the render loop
-    requestIdleCallback(workLoop);
-
-    // Example App component
-    function App() {
-      return createReactElement(
-        'div',
-        { style: 'padding: 20px;' },
-        createReactElement('h1', { style: 'color: blue;' }, 'Hello from React MVP!'),
-        createReactElement('p', null, 'This is a working implementation'),
-        createReactElement('button', 
-          { onclick: () => alert('Button clicked!') }, 
-          'Click me!'
-        )
-      );
-    }
-
-    // Initialize the app
-    const container = document.getElementById('root');
-    const root = createRoot(container);
-    root.render(createReactElement(App));
-  </script>
-</body>
+      // Render the app
+      render(createElement(App), document.getElementById("root"));
+    </script>
+  </body>
 </html>
