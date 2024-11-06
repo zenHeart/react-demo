@@ -1,4 +1,4 @@
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import { COMPONENTS,TAGS_COLOR } from './const'
 import Nav from './components/Nav';
 

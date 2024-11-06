@@ -11,14 +11,6 @@ export default function Tags(props: React.PropsWithChildren<TagsProps> ) {
   const jump = (e: any, tag: string) => {
     e.stopPropagation();
     e.preventDefault();
-    let queryParams = new URLSearchParams(window.location.search);
-    //@ts-ignore
-    if(queryParams.get('tag' === tag)) {
-      return 'tag'
-    }
-    queryParams.set("tag", tag);
-    //@ts-ignore
-    window.history.pushState(null, null, "?" + queryParams.toString());
     props.onClickTag(tag);
   }
   return (

@@ -7,7 +7,7 @@ tags: [ theory, jsx]
 
 <div id="root"></div>
 <script>
-  // debug(document.createElement)
+  debug(document.createElement)
   const { createElement }  = React
   function App() {
     return createElement(
@@ -20,5 +20,5 @@ tags: [ theory, jsx]
   const root = ReactDOM.createRoot(mountPoint)
   root.render(createElement(App))
   // 查看是什么时候触发的 root 挂载数据
-  // debug(mountPoint.appendChild)
+  debug(mountPoint.appendChild)
 </script>

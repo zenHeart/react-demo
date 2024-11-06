@@ -1,5 +1,5 @@
 import React,{ useState } from 'react'
-import { NavLink, Route,Routes } from 'react-router-dom'
+import { NavLink, Route,Routes , useSearchParams } from 'react-router-dom'
 import Tags from './Tags'
 import './nav.less'
 import { isJsxFragment } from 'typescript'
@@ -7,7 +7,7 @@ function formatComponent(component: any) {
   // html 组件使用 iframe
   if (typeof component === 'string') {
     // @ts-ignore
-    return <iframe srcdoc={component}/>
+    return <iframe srcDoc={component}/>
   } else {
     return React.createElement(component)
   }
@@ -15,18 +15,21 @@ function formatComponent(component: any) {
 
 // @ts-ignore
 function Nav({ children, parent = '',tagsColor }) {
-  let [filterTag,setTag] = useState(new URLSearchParams(window.location.search).get("tag"));
+  let [searchParams, setSearchParams] = useSearchParams()
+  const filterTag = searchParams.get('tag')
+
   // @ts-ignore
   const handleTagChange = (tag) => {
-      setTag(tag);
+    setSearchParams({
+      tag
+    });
   }
-  console.log('children', children)
   return (
     <div className='nav'>
       <nav>
         <ul>
           {/* @ts-ignore */}
-          {children.filter(({tags}) => filterTag?(tags||[]).includes(filterTag):true)
+          {children.filter(({ tags }) => filterTag ? (tags||[]).includes(filterTag):true)
           .map(({ name ,tags}: {name: string, tags: string[]}) => {
             return (
             <LinkItem
@@ -57,11 +60,14 @@ function Nav({ children, parent = '',tagsColor }) {
   )
 }
 // @ts-ignore
-function LinkItem({ path, text = '',children }) {
+import { useLocation } from 'react-router-dom';
+
+function LinkItem({ path, text = '', children }: any) {
+  const location = useLocation();
   return (
     <li>
-      <NavLink  className={({ isActive }) => isActive ? 'active' : undefined}  to={`${path}${window.location.search}`}>
-        {text || path}  {children}
+      <NavLink className={({ isActive }) => isActive ? 'active' : undefined} to={{ pathname: path, search: location.search }}>
+        {text || path} {children}
       </NavLink>
     </li>
   )
