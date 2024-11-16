@@ -114,8 +114,8 @@ export function NavigationBar({providedFiles}: {providedFiles: Array<string>}) {
   };
 
   return (
-    <div className="bg-wash dark:bg-card-dark flex justify-between items-center relative z-10 border-b border-border dark:border-border-dark rounded-t-lg text-lg">
-      <div className="flex-1 grow min-w-0 px-4 lg:px-6">
+    <div className="relative z-10 flex items-center justify-between text-lg border-b rounded-t-lg bg-wash dark:bg-card-dark border-border dark:border-border-dark">
+      <div className="flex-1 min-w-0 px-4 grow lg:px-6">
         <Listbox value={activeFile} onChange={setActiveFile}>
           <div ref={containerRef}>
             <div className="relative overflow-hidden">
@@ -131,33 +131,6 @@ export function NavigationBar({providedFiles}: {providedFiles: Array<string>}) {
                 )}>
                 <FileTabs />
               </div>
-              <Listbox.Button as={Fragment}>
-                {({open}) => (
-                  // If tabs don't fit, display the dropdown instead.
-                  // The dropdown is absolutely positioned inside the
-                  // space that's taken by the (invisible) tab list.
-                  <button
-                    className={cn(
-                      'absolute top-0 start-[2px]',
-                      !showDropdown && 'invisible'
-                    )}>
-                    <span
-                      className={cn(
-                        'h-full py-2 px-1 mt-px -mb-px flex border-b text-link dark:text-link-dark border-link dark:border-link-dark items-center text-md leading-tight truncate'
-                      )}
-                      style={{maxWidth: '160px'}}>
-                      {getFileName(activeFile)}
-                      {isMultiFile && (
-                        <span className="ms-2">
-                          <IconChevron
-                            displayDirection={open ? 'up' : 'down'}
-                          />
-                        </span>
-                      )}
-                    </span>
-                  </button>
-                )}
-              </Listbox.Button>
             </div>
           </div>
           {isMultiFile && showDropdown && (
@@ -180,7 +153,7 @@ export function NavigationBar({providedFiles}: {providedFiles: Array<string>}) {
         </Listbox>
       </div>
       <div
-        className="px-3 flex items-center justify-end text-start"
+        className="flex items-center justify-end px-3 text-start"
         translate="yes">
         <DownloadButton providedFiles={providedFiles} />
         <ResetButton onReset={handleReset} />

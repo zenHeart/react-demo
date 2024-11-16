@@ -95,7 +95,6 @@ html.dark .sp-wrapper {
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
-  background-color: var(--sp-colors-surface2);
 
   -webkit-mask-image: -webkit-radial-gradient(
     var(--sp-colors-surface1),

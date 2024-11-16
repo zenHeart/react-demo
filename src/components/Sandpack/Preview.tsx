@@ -8,14 +8,12 @@ import {useSandpack, SandpackStack} from '@codesandbox/sandpack-react/unstyled';
 import cn from 'classnames';
 import {ErrorMessage} from './ErrorMessage';
 import {SandpackConsole} from './Console';
-import type {LintDiagnostic} from './useSandpackLint';
 import {CSSProperties} from 'react';
 import {LoadingOverlay} from './LoadingOverlay';
 
 type CustomPreviewProps = {
   className?: string;
   isExpanded: boolean;
-  lintErrors: LintDiagnostic;
 };
 
 function useDebounced(value: any): any {
@@ -33,7 +31,6 @@ function useDebounced(value: any): any {
 export function Preview({
   isExpanded,
   className,
-  lintErrors,
 }: CustomPreviewProps) {
   const {sandpack, listen} = useSandpack();
   const [bundlerIsReady, setBundlerIsReady] = useState(false);
@@ -56,25 +53,6 @@ export function Preview({
   // to show the Error Boundary fallback
   if (rawError && rawError.message.includes('Example Error:')) {
     rawError = null;
-  }
-
-  // Memoized because it's fed to debouncing.
-  const firstLintError = useMemo(() => {
-    if (lintErrors.length === 0) {
-      return null;
-    } else {
-      const {line, column, message} = lintErrors[0];
-      return {
-        title: 'Lint Error',
-        message: `${line}:${column} - ${message}`,
-      };
-    }
-  }, [lintErrors]);
-
-  if (rawError == null || rawError.title === 'Runtime Exception') {
-    if (firstLintError !== null) {
-      rawError = firstLintError;
-    }
   }
 
   if (rawError != null && rawError.title === 'Runtime Exception') {
@@ -191,6 +169,8 @@ export function Preview({
             title="Sandbox Preview"
             style={{
               height: iframeComputedHeight || '15px',
+              width: '99%',
+              border: '1px solid black',
               zIndex: isExpanded ? 'initial' : -1,
             }}
           />

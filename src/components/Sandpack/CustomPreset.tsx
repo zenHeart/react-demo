@@ -11,18 +11,15 @@ import {
 } from '@codesandbox/sandpack-react/unstyled';
 import cn from 'classnames';
 
-import {IconChevron} from './IconChevron';
 import {NavigationBar} from './NavigationBar';
 import {Preview} from './Preview';
 
-import {useSandpackLint} from './useSandpackLint';
 
 export const CustomPreset = memo(function CustomPreset({
   providedFiles,
 }: {
   providedFiles: Array<string>;
 }) {
-  const {lintErrors, lintExtensions} = useSandpackLint();
   const {sandpack} = useSandpack();
   const {code} = useActiveCode();
   const {activeFile} = sandpack;
@@ -35,8 +32,6 @@ export const CustomPreset = memo(function CustomPreset({
   return (
     <SandboxShell
       providedFiles={providedFiles}
-      lintErrors={lintErrors}
-      lintExtensions={lintExtensions}
       isExpandable={isExpandable}
     />
   );
@@ -44,20 +39,16 @@ export const CustomPreset = memo(function CustomPreset({
 
 const SandboxShell = memo(function SandboxShell({
   providedFiles,
-  lintErrors,
-  lintExtensions,
   isExpandable,
 }: {
   providedFiles: Array<string>;
-  lintErrors: Array<any>;
-  lintExtensions: Array<any>;
   isExpandable: boolean;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   return (
     <>
       <div
-        className="shadow-lg dark:shadow-lg-dark rounded-lg"
+        className="rounded-lg shadow-lg dark:shadow-lg-dark"
         ref={containerRef}
         style={{
           contain: 'content',
@@ -67,11 +58,10 @@ const SandboxShell = memo(function SandboxShell({
           className={cn(
            'sp-layout-expanded'
           )}>
-          <Editor lintExtensions={lintExtensions} />
+          <Editor />
           <Preview
             className="order-last xl:order-2"
             isExpanded
-            lintErrors={lintErrors}
           />
 
         </SandpackLayout>
@@ -80,18 +70,13 @@ const SandboxShell = memo(function SandboxShell({
   );
 });
 
-const Editor = memo(function Editor({
-  lintExtensions,
-}: {
-  lintExtensions: Array<any>;
-}) {
+const Editor = memo(function Editor() {
   return (
     <SandpackCodeEditor
       showLineNumbers
       showInlineErrors
       showTabs={false}
       showRunButton={false}
-      extensions={lintExtensions}
     />
   );
 });
