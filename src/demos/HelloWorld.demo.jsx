@@ -1,5 +1,5 @@
 import React from 'react'
-function HelloWorld () {
+function HelloWorld() {
   return <h1>hello world</h1>
 }
 

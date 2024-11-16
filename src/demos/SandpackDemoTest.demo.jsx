@@ -5,7 +5,50 @@ function SandpackDemoTest() {
     <pre>
       <code className="language-js">
         {
-          "import { getImageUrl } from './utils.js';\n\nfunction Avatar({ person, size }) {\n  return (\n    <img\n      className=\"avatar\"\n      src={getImageUrl(person)}\n      alt={person.name}\n      width={size}\n      height={size}\n    />\n  );\n}\n\nexport default function Profile() {\n  return (\n    <div>\n      <Avatar\n        size={100}\n        person={{ \n          name: 'Katsuko Saruhashi', \n          imageId: 'YfeOqp2'\n        }}\n      />\n      <Avatar\n        size={80}\n        person={{\n          name: 'Aklilu Lemma', \n          imageId: 'OKS67lh'\n        }}\n      />\n      <Avatar\n        size={50}\n        person={{ \n          name: 'Lin Lanying',\n          imageId: '1bX5QH6'\n        }}\n      />\n    </div>\n  );\n}\n"
+          `
+         import { getImageUrl } from './utils.js';
+
+function Avatar({ person, size }) {
+  return (
+    <img
+      className="avatar"
+      src={getImageUrl(person)}
+      alt={person.name}
+      width={size}
+      height={size}
+    />
+  );
+}
+
+export default function Profile() {
+  return (
+    <div>
+      <Avatar
+        size={100}
+        person={{ 
+          name: 'Katsuko Saruhashi', 
+          imageId: 'YfeOqp2'
+        }}
+      />
+      <Avatar
+        size={80}
+        person={{
+          name: 'Aklilu Lemma', 
+          imageId: 'OKS67lh'
+        }}
+      />
+      <Avatar
+        size={50}
+        person={{ 
+          name: 'Lin Lanying',
+          imageId: '1bX5QH6'
+        }}
+      />
+    </div>
+  );
+}
+
+         `
         }
       </code>
     </pre>
