@@ -13,6 +13,7 @@ const styles = {
     backgroundColor: 'var(--bg-secondary)',
     height: '100vh',
     position: 'relative' as const,
+    overflowY: 'auto' as const,
   },
   sidebarExpanded: {
     width: '300px',
@@ -60,8 +61,9 @@ const styles = {
     flex: 1,
     backgroundColor: 'var(--bg-primary)',
     height: '100vh',
-    display: 'flex',
-    overflow: 'hidden',
+    overflowY: 'auto' as const,
+    display: 'sticky' as const,
+    top: 0,
   },
   navContent: {
     overflowY: 'auto' as const,
