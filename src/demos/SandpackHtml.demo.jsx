@@ -4,20 +4,21 @@ function SandpackDemoTest() {
   return <Sandpack template="vanilla">
     <pre>
       <code className="language-html">
-        {`<!DOCTYPE html>
-        <html>
-          <head><title>Demo</title></head>
-          <body>
-            <h1>Hello World</h1>
-            <script src="src/script.js"></script>
-            <link rel="stylesheet" href="styles.css">
-          </body>
-        </html>`}
-      </code>
-    </pre>
-    <pre>
-      <code meta="src/script.js" className="language-js">
-        {`console.log('Hello from JavaScript!');`}
+        {`<script src="https://cdn.jsdelivr.net/npm/react/umd/react.development.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom/umd/react-dom.development.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone"></script>
+
+<div id="root"></div>
+<script type="text/babel">
+  const { createElement }  = React
+
+  const Hello = (
+    <h1>hello react!</h1>
+  )
+  const root = ReactDOM.createRoot(document.getElementById('root'))
+  root.render(Hello)
+
+</script>`}
       </code>
     </pre>
     <pre>
