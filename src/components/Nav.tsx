@@ -329,7 +329,7 @@ function Nav({ children, tagsColor }: { children: NavItem[], tagsColor: string }
             }}
             title={isSidebarExpanded ? "Collapse sidebar" : "Expand sidebar"}
           >
-            <ChevronIcon expanded={!isSidebarExpanded} />
+            <ChevronIcon expanded={isSidebarExpanded} />
           </button>
         </div>
         <div
