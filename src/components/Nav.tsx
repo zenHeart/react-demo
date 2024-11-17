@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { NavLink, Route, Routes, useSearchParams, useLocation } from 'react-router-dom'
+import { NavLink, Route, Routes, useSearchParams, useLocation, Navigate, useNavigate } from 'react-router-dom'
 import Tags from './Tags'
 
 const styles = {
@@ -8,10 +8,69 @@ const styles = {
     minHeight: '100vh',
   },
   sidebar: {
-    width: '300px',
+    transition: 'width 0.3s ease',
     borderRight: '1px solid #e5e7eb',
     backgroundColor: '#f8f9fa',
     overflowY: 'auto' as const,
+    position: 'relative' as const,
+  },
+  sidebarExpanded: {
+    width: '300px',
+  },
+  sidebarCollapsed: {
+    width: '50px',
+  },
+  navHeader: {
+    position: 'sticky' as const,
+    top: 0,
+    backgroundColor: '#f8f9fa',
+    borderBottom: '1px solid #e5e7eb',
+    padding: '12px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    zIndex: 10,
+  },
+  homeButton: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '6px 12px',
+    borderRadius: '4px',
+    border: 'none',
+    backgroundColor: 'transparent',
+    color: '#666',
+    cursor: 'pointer',
+    fontSize: '14px',
+    transition: 'all 0.2s ease',
+    '&:hover': {
+      color: '#000',
+      backgroundColor: '#f0f0f0',
+    }
+  },
+  toggleButton: {
+    width: '24px',
+    height: '24px',
+    borderRadius: '4px',
+    backgroundColor: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#666',
+    transition: 'all 0.2s ease',
+    '&:hover': {
+      color: '#000',
+      backgroundColor: '#f0f0f0',
+    }
+  },
+  navContent: {
+    padding: '0.5rem 1rem 2rem 1.5rem',
+  },
+  navContentHidden: {
+    opacity: 0,
+    visibility: 'hidden' as const,
+    position: 'absolute' as const,
   },
   navSection: {
   },
@@ -94,12 +153,43 @@ function formatComponent(component: any) {
   }
 }
 
+// Add a chevron icon component
+const ChevronIcon = ({ expanded }: { expanded: boolean }) => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="currentColor"
+    style={{
+      transform: expanded ? 'rotate(180deg)' : 'none',
+      transition: 'transform 0.3s ease'
+    }}
+  >
+    <path d="M5.7 13.7L5 13l4.6-4.6L5 3.7 5.7 3l5.3 5.4z" />
+  </svg>
+);
+
+// Home icon component
+const HomeIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="currentColor"
+    style={{ marginRight: '6px' }}
+  >
+    <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z" />
+  </svg>
+);
+
 // @ts-ignore
 function Nav({ children, tagsColor }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [expandedGroups, setExpandedGroups] = useState<string[]>([]);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
   const filterTag = searchParams.get('tag');
   const location = useLocation();
+  const navigate = useNavigate();
 
   const handleTagChange = (tag: string) => {
     setSearchParams({ tag });
@@ -187,12 +277,62 @@ function Nav({ children, tagsColor }) {
     }, [] as Array<{ name: string, path: string, component: any, tags: string[] }>);
   }
 
+  // Get first available route for redirect
+  const getFirstAvailableRoute = () => {
+    const flatRoutes = flattenRoutes(children);
+    return flatRoutes[0]?.path || '/';
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarExpanded(!isSidebarExpanded);
+  };
+
+  const handleHomeClick = () => {
+    setSearchParams({}); // Clear any search params
+    setExpandedGroups([]); // Collapse all groups
+    navigate(getFirstAvailableRoute()); // Navigate to first route
+  };
+
   return (
     <div style={styles.layout}>
-      <nav style={styles.sidebar}>
-        <ul style={styles.navList}>
-          {renderNavItems(children)}
-        </ul>
+      <nav
+        style={{
+          ...styles.sidebar,
+          ...(isSidebarExpanded ? styles.sidebarExpanded : styles.sidebarCollapsed)
+        }}
+      >
+        <div style={styles.navHeader}>
+          {isSidebarExpanded && (
+            <button
+              onClick={handleHomeClick}
+              style={styles.homeButton}
+              title="Back to home"
+            >
+              <HomeIcon />
+              Home
+            </button>
+          )}
+          <button
+            onClick={toggleSidebar}
+            style={{
+              ...styles.toggleButton,
+              marginLeft: isSidebarExpanded ? 'auto' : 0,
+            }}
+            title={isSidebarExpanded ? "Collapse sidebar" : "Expand sidebar"}
+          >
+            <ChevronIcon expanded={!isSidebarExpanded} />
+          </button>
+        </div>
+        <div
+          style={{
+            ...styles.navContent,
+            ...(isSidebarExpanded ? {} : styles.navContentHidden)
+          }}
+        >
+          <ul style={styles.navList}>
+            {renderNavItems(children)}
+          </ul>
+        </div>
       </nav>
       <main style={styles.content}>
         <Routes>
@@ -203,6 +343,10 @@ function Nav({ children, tagsColor }) {
               element={formatComponent(component)}
             />
           ))}
+          <Route
+            path="*"
+            element={<Navigate to={getFirstAvailableRoute()} replace />}
+          />
         </Routes>
       </main>
     </div>
