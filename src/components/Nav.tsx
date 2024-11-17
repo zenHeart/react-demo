@@ -143,7 +143,7 @@ const DarkModeIcon = ({ isDark }: { isDark: boolean }) => (
   </svg>
 );
 
-function Nav({ children, tagsColor }: { children: NavItem[], tagsColor: string }) {
+function Nav({ children, tagsColor }: { children: NavItem[], tagsColor: any }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [expandedGroups, setExpandedGroups] = useState<string[]>([]);
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
@@ -213,7 +213,7 @@ function Nav({ children, tagsColor }: { children: NavItem[], tagsColor: string }
           if (filteredChildren.length === 0) return null;
 
           return (
-            <div key={item.name} style={styles.navSection}>
+            <div key={item.name}>
               <div
                 style={{
                   ...styles.navSectionTitle,
@@ -228,7 +228,6 @@ function Nav({ children, tagsColor }: { children: NavItem[], tagsColor: string }
                 <ChevronIcon expanded={isExpanded} />
               </div>
               <ul style={{
-                ...styles.navList,
                 display: isExpanded ? 'block' : 'none',
               }}>
                 {renderNavItems(item.children, item.name)}
@@ -238,7 +237,7 @@ function Nav({ children, tagsColor }: { children: NavItem[], tagsColor: string }
         }
 
         return (
-          <li key={currentPath} style={styles.navItem}>
+          <li key={currentPath}>
             <NavLink
               style={({ isActive }) => ({
                 ...styles.navLink,
@@ -248,7 +247,7 @@ function Nav({ children, tagsColor }: { children: NavItem[], tagsColor: string }
             >
               {item.name}
               {itemTags.length > 0 && (
-                <span style={styles.navTags}>
+                <span >
                   <Tags onClickTag={handleTagChange} tagsColor={tagsColor} tags={itemTags} />
                 </span>
               )}
@@ -339,7 +338,7 @@ function Nav({ children, tagsColor }: { children: NavItem[], tagsColor: string }
             ...(isSidebarExpanded ? {} : styles.navContentHidden)
           }}
         >
-          <ul style={styles.navList}>
+          <ul>
             {renderNavItems(children)}
           </ul>
         </div>
