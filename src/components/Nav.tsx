@@ -64,6 +64,16 @@ const styles = {
     top: 0,
     height: '100vh',
   },
+  navContent: {
+    overflowY: 'auto' as const,
+    flex: 1,
+    padding: '12px',
+    display: 'flex',
+    flexDirection: 'column' as const,
+  },
+  navContentHidden: {
+    display: 'none',
+  },
 };
 
 interface NavItem {
@@ -333,7 +343,9 @@ function Nav({ children, tagsColor }: { children: NavItem[], tagsColor: string }
           </ul>
         </div>
       </nav>
-      <main style={styles.content}>
+      <main style={{
+        ...styles.content,
+      }}>
         <Routes>
           {flattenRoutes(children).map(({ path, component }) => (
             <Route
