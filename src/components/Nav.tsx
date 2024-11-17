@@ -102,7 +102,7 @@ const ChevronIcon = ({ expanded }: { expanded: boolean }) => (
     viewBox="0 0 16 16"
     fill="currentColor"
     style={{
-      transform: expanded ? 'rotate(180deg)' : 'none'
+      transform: expanded ? 'rotate(90deg)' : 'none'
     }}
   >
     <path d="M5.7 13.7L5 13l4.6-4.6L5 3.7 5.7 3l5.3 5.4z" />
