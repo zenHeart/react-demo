@@ -489,6 +489,7 @@ html.dark .sandpack--playground .sp-overlay {
   /* This is because we don't know its content in advance. */
   min-height: calc(100vh - 40px);
   max-height: calc(100vh - 40px);
+  overflow: auto;
 }
 
 .sandpack .sp-layout.sp-layout-expanded>.sp-stack:nth-child(1) {
