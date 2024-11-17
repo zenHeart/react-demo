@@ -3,13 +3,13 @@
  */
 
 /* eslint-disable react-hooks/exhaustive-deps */
-import {useRef, useState, useEffect, useMemo, useId} from 'react';
-import {useSandpack, SandpackStack} from '@codesandbox/sandpack-react/unstyled';
+import { useRef, useState, useEffect, useMemo, useId } from 'react';
+import { useSandpack, SandpackStack } from '@codesandbox/sandpack-react/unstyled';
 import cn from 'classnames';
-import {ErrorMessage} from './ErrorMessage';
-import {SandpackConsole} from './Console';
-import {CSSProperties} from 'react';
-import {LoadingOverlay} from './LoadingOverlay';
+import { ErrorMessage } from './ErrorMessage';
+import { SandpackConsole } from './Console';
+import { CSSProperties } from 'react';
+import { LoadingOverlay } from './LoadingOverlay';
 
 type CustomPreviewProps = {
   className?: string;
@@ -32,14 +32,14 @@ export function Preview({
   isExpanded,
   className,
 }: CustomPreviewProps) {
-  const {sandpack, listen} = useSandpack();
+  const { sandpack, listen } = useSandpack();
   const [bundlerIsReady, setBundlerIsReady] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [iframeComputedHeight, setComputedAutoHeight] = useState<number | null>(
     null
   );
 
-  let {error: rawError, registerBundler, unregisterBundler} = sandpack;
+  let { error: rawError, registerBundler, unregisterBundler } = sandpack;
 
   if (
     rawError &&
@@ -132,11 +132,11 @@ export function Preview({
 
   const iframeWrapperPosition = (): CSSProperties => {
     if (hideContent) {
-      return {position: 'relative'};
+      return { position: 'relative' };
     }
 
     if (isExpanded) {
-      return {position: 'sticky', top: 'calc(2em + 64px)'};
+      return { position: 'sticky', top: 'calc(2em + 64px)' };
     }
 
     return {};
@@ -169,8 +169,6 @@ export function Preview({
             title="Sandbox Preview"
             style={{
               height: iframeComputedHeight || '15px',
-              width: '99%',
-              border: '1px solid black',
               zIndex: isExpanded ? 'initial' : -1,
             }}
           />

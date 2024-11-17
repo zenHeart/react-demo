@@ -3,12 +3,12 @@
  */
 
 import defaultTheme from 'tailwindcss/defaultTheme';
-import colors  from './colors'
+import colors from './colors'
 
 export default {
   content: [
     './src/components/**/*.{js,ts,jsx,tsx}',
-    './src/pages/**/*.{js,ts,jsx,tsx}',
+    './src/demos/**/*.{js,ts,jsx,tsx,html}',
     './src/styles/**/*.{js,ts,jsx,tsx}',
   ],
   darkMode: 'class',
@@ -16,7 +16,7 @@ export default {
     // Override base screen sizes
     screens: {
       ...defaultTheme.screens,
-      betterhover: {raw: '(hover: hover)'},
+      betterhover: { raw: '(hover: hover)' },
       xs: '374px',
       '3xl': '1919px',
     },
@@ -111,34 +111,34 @@ export default {
           },
         },
         rotate: {
-          from: {transform: 'rotate(0deg)'},
-          to: {transform: 'rotate(180deg)'},
+          from: { transform: 'rotate(0deg)' },
+          to: { transform: 'rotate(180deg)' },
         },
         scale: {
-          from: {transform: 'scale(0.8)'},
-          '90%': {transform: 'scale(1.05)'},
-          to: {transform: 'scale(1)'},
+          from: { transform: 'scale(0.8)' },
+          '90%': { transform: 'scale(1.05)' },
+          to: { transform: 'scale(1)' },
         },
         circle: {
-          from: {transform: 'scale(0)', strokeWidth: '16px'},
-          '50%': {transform: 'scale(0.5)', strokeWidth: '16px'},
-          to: {transform: 'scale(1)', strokeWidth: '0px'},
+          from: { transform: 'scale(0)', strokeWidth: '16px' },
+          '50%': { transform: 'scale(0.5)', strokeWidth: '16px' },
+          to: { transform: 'scale(1)', strokeWidth: '0px' },
         },
         marquee: {
-          '0%': {transform: 'translateX(0%)'},
-          '100%': {transform: 'translateX(-400%)'},
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-400%)' },
         },
         marquee2: {
-          '0%': {transform: 'translateX(400%)'},
-          '100%': {transform: 'translateX(0%)'},
+          '0%': { transform: 'translateX(400%)' },
+          '100%': { transform: 'translateX(0%)' },
         },
         'large-marquee': {
-          '0%': {transform: 'translateX(0%)'},
-          '100%': {transform: 'translateX(-200%)'},
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-200%)' },
         },
         'large-marquee2': {
-          '0%': {transform: 'translateX(200%)'},
-          '100%': {transform: 'translateX(0%)'},
+          '0%': { transform: 'translateX(200%)' },
+          '100%': { transform: 'translateX(0%)' },
         },
         'fade-up': {
           '0%': {
