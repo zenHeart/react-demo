@@ -1,7 +1,8 @@
 import React, { Suspense } from 'react'
-const HelloWorld = React.lazy(() => import('../components/HelloWorld'))
+// const HelloWorld = React.lazy(() => import('./HelloWorld'))
+import HelloWorld from './HelloWorld'
 
-function ClassComponent () {
+function ClassComponent() {
   return (
     <div>
       <h2>采用类编写组价</h2>
@@ -21,13 +22,13 @@ function ClassComponent () {
 }
 
 class ShowAsync extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       show: false
     }
   }
-  render () {
+  render() {
     return (
       <div>
         <button

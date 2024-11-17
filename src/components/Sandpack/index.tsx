@@ -2,13 +2,13 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
-import {lazy, memo, Children, Suspense} from 'react';
-import {AppJSPath, createFileMap} from './createFileMap';
+import { lazy, memo, Children, Suspense } from 'react';
+import { AppJSPath, createFileMap } from './createFileMap';
 import './Sandpack.css';
 
 const SandpackRoot = lazy(() => import('./SandpackRoot'));
 
-const SandpackGlimmer = ({code}: {code: string}) => (
+const SandpackGlimmer = ({ code }: { code: string }) => (
   <div className="sandpack sandpack--playground my-8">
     <div className="sp-wrapper">
       <div className="shadow-lg dark:shadow-lg-dark rounded-lg">
