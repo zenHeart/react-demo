@@ -27,9 +27,9 @@ const getType = (
 
 const getColor = (message: SandpackMessageConsoleMethods): string => {
   if (message === 'warn') {
-    return 'text-yellow-50';
+    return 'text-yellow-500';
   } else if (message === 'error') {
-    return 'text-red-40';
+    return 'text-red-500';
   } else {
     return 'text-secondary dark:text-secondary-dark';
   }
@@ -99,43 +99,35 @@ export const SandpackConsole = ({ visible }: { visible: boolean }) => {
     let isActive = true;
     const unsubscribe = listen((message) => {
       if (!isActive) {
-        console.warn('Received an unexpected log from Sandpack.');
         return;
       }
-      if (
-        (message.type === 'start' && message.firstLoad) ||
-        message.type === 'refresh'
-      ) {
+
+      // Reset logs on refresh/restart
+      if (message.type === 'start' || message.type === 'refresh') {
         setLogs([]);
+        return;
       }
+
+      // Handle console messages
       if (message.type === 'console' && message.codesandbox) {
         setLogs((prev) => {
           const newLogs = message.log
             .filter((consoleData) => {
-              if (!consoleData.method) {
-                return false;
-              }
-              if (
-                typeof consoleData.data[0] === 'string' &&
-                consoleData.data[0].indexOf('The above error occurred') !== -1
-              ) {
-                // Don't show React error addendum because
-                // we have a custom error overlay.
-                return false;
-              }
-              return true;
+              return consoleData.method &&
+                !(typeof consoleData.data[0] === 'string' &&
+                  consoleData.data[0].indexOf('The above error occurred') !== -1);
             })
-            .map((consoleData) => {
-              return {
-                ...consoleData,
-                data: formatStr(...consoleData.data),
-              };
-            });
-          let messages = [...prev, ...newLogs];
-          while (messages.length > MAX_MESSAGE_COUNT) {
-            messages.shift();
-          }
-          return messages;
+            .map((consoleData) => ({
+              ...consoleData,
+              id: `${Date.now()}-${Math.random()}`,
+              data: Array.isArray(consoleData.data)
+                ? consoleData.data.map(item =>
+                  typeof item === 'undefined' ? 'undefined' : String(item)
+                )
+                : [String(consoleData.data)]
+            }));
+
+          return [...prev, ...newLogs].slice(-MAX_MESSAGE_COUNT);
         });
       }
     });
@@ -146,13 +138,11 @@ export const SandpackConsole = ({ visible }: { visible: boolean }) => {
     };
   }, [listen]);
 
+  const clearLogs = () => {
+    setLogs([]);
+  };
 
-  useEffect(() => {
-    if (wrapperRef.current) {
-      wrapperRef.current.scrollTop = wrapperRef.current.scrollHeight;
-    }
-  }, [logs]);
-
+  // Don't show console when not visible or no logs
   if (!visible || logs.length === 0) {
     return null;
   }
@@ -160,15 +150,12 @@ export const SandpackConsole = ({ visible }: { visible: boolean }) => {
   return (
     <div className="absolute dark:border-gray-700 bg-white dark:bg-gray-95 border-t bottom-0 w-full dark:text-white">
       <div className="flex justify-between">
-        <button
-          className="flex items-center p-1">
+        <button className="flex items-center p-1">
           <span className="ps-1 text-sm">Console ({logs.length})</span>
         </button>
         <button
           className="p-1"
-          onClick={() => {
-            setLogs([]);
-          }}>
+          onClick={clearLogs}>
           <svg
             viewBox="0 0 24 24"
             width="18"
@@ -183,6 +170,30 @@ export const SandpackConsole = ({ visible }: { visible: boolean }) => {
           </svg>
         </button>
       </div>
-    </div >
+
+      <div
+        ref={wrapperRef}
+        className="border-t dark:border-gray-700 overflow-auto"
+        style={{ maxHeight: '20rem', minHeight: '3rem' }}>
+        <div className="divide-y divide-gray-100 dark:divide-gray-700">
+          {logs.map(({ data, id, method }) => (
+            <div
+              key={id}
+              className={cn('px-4 py-2 font-mono text-sm')}>
+              {data.map((msg, i) => (
+                <span
+                  key={i}
+                  className={cn(
+                    'block whitespace-pre-wrap break-words',
+                    getColor(method)
+                  )}>
+                  {typeof msg === 'string' ? msg : JSON.stringify(msg, null, 2)}
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
