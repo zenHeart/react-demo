@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+set -x
 
 rep_url=$(git remote get-url origin) # 仓库地址
 sitePath=$(
@@ -22,6 +23,6 @@ git add -A
 git commit -m 'deploy'
 
 # 如果发布到 https://<USERNAME>.github.io
-git push -f ${rep_url} master:gh-pages
+git push -f ${rep_url} main:gh-pages
 
 cd -
