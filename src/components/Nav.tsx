@@ -9,7 +9,6 @@ const styles = {
   },
   sidebar: {
     width: '300px',
-    padding: '2rem 1.5rem',
     borderRight: '1px solid #e5e7eb',
     backgroundColor: '#f8f9fa',
     overflowY: 'auto' as const,
@@ -61,7 +60,6 @@ const styles = {
   },
   content: {
     flex: 1,
-    padding: '2rem',
     backgroundColor: '#fff',
     overflowY: 'auto' as const,
   },

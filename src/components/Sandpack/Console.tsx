@@ -2,14 +2,14 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 import cn from 'classnames';
-import {useState, useRef, useEffect} from 'react';
-import {IconChevron} from './IconChevron';
+import { useState, useRef, useEffect } from 'react';
+import { IconChevron } from './IconChevron';
 
 import {
   SandpackCodeViewer,
   useSandpack,
 } from '@codesandbox/sandpack-react/unstyled';
-import type {SandpackMessageConsoleMethods} from '@codesandbox/sandpack-client';
+import type { SandpackMessageConsoleMethods } from '@codesandbox/sandpack-client';
 
 const getType = (
   message: SandpackMessageConsoleMethods
@@ -90,8 +90,8 @@ type ConsoleData = Array<{
 
 const MAX_MESSAGE_COUNT = 100;
 
-export const SandpackConsole = ({visible}: {visible: boolean}) => {
-  const {listen} = useSandpack();
+export const SandpackConsole = ({ visible }: { visible: boolean }) => {
+  const { listen } = useSandpack();
   const [logs, setLogs] = useState<ConsoleData>([]);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -146,7 +146,6 @@ export const SandpackConsole = ({visible}: {visible: boolean}) => {
     };
   }, [listen]);
 
-  const [isExpanded, setIsExpanded] = useState(true);
 
   useEffect(() => {
     if (wrapperRef.current) {
@@ -162,9 +161,7 @@ export const SandpackConsole = ({visible}: {visible: boolean}) => {
     <div className="absolute dark:border-gray-700 bg-white dark:bg-gray-95 border-t bottom-0 w-full dark:text-white">
       <div className="flex justify-between">
         <button
-          className="flex items-center p-1"
-          onClick={() => setIsExpanded(!isExpanded)}>
-          <IconChevron displayDirection={isExpanded ? 'down' : 'right'} />
+          className="flex items-center p-1">
           <span className="ps-1 text-sm">Console ({logs.length})</span>
         </button>
         <button
@@ -186,60 +183,6 @@ export const SandpackConsole = ({visible}: {visible: boolean}) => {
           </svg>
         </button>
       </div>
-      {isExpanded && (
-        <div className="w-full h-full border-t bg-white dark:border-gray-700 dark:bg-gray-95 min-h-[28px] console">
-          <div className="max-h-40 h-auto overflow-auto" ref={wrapperRef}>
-            {logs.map(({data, id, method}) => {
-              return (
-                <div
-                  key={id}
-                  className={cn(
-                    'first:border-none border-t dark:border-gray-700 text-md p-1 ps-2 leading-6 font-mono min-h-[32px] whitespace-pre-wrap',
-                    `console-${getType(method)}`,
-                    getColor(method)
-                  )}>
-                  <span className="console-message">
-                    {data.map((msg, index) => {
-                      if (typeof msg === 'string') {
-                        return <span key={`${msg}-${index}`}>{msg}</span>;
-                      }
-
-                      let children;
-                      if (msg != null && typeof msg['@t'] === 'string') {
-                        // CodeSandbox wraps custom types
-                        children = msg['@t'];
-                      } else {
-                        try {
-                          children = JSON.stringify(msg, null, 2);
-                        } catch (error) {
-                          try {
-                            children = Object.prototype.toString.call(msg);
-                          } catch (err) {
-                            children = '[' + typeof msg + ']';
-                          }
-                        }
-                      }
-
-                      return (
-                        <span
-                          className={cn('console-span')}
-                          key={`${msg}-${index}`}>
-                          <SandpackCodeViewer
-                            initMode="user-visible"
-                            showTabs={false}
-                            // fileType="js"
-                            code={children}
-                          />
-                        </span>
-                      );
-                    })}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-    </div>
+    </div >
   );
 };

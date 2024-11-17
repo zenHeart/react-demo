@@ -13,7 +13,6 @@ import { LoadingOverlay } from './LoadingOverlay';
 
 type CustomPreviewProps = {
   className?: string;
-  isExpanded: boolean;
 };
 
 function useDebounced(value: any): any {
@@ -29,7 +28,6 @@ function useDebounced(value: any): any {
 }
 
 export function Preview({
-  isExpanded,
   className,
 }: CustomPreviewProps) {
   const { sandpack, listen } = useSandpack();
@@ -135,33 +133,30 @@ export function Preview({
       return { position: 'relative' };
     }
 
-    if (isExpanded) {
-      return { position: 'sticky', top: 'calc(2em + 64px)' };
-    }
 
-    return {};
+    return {
+      position: 'sticky',
+      top: '1rem',
+      zIndex: 10
+    };
+
   };
 
   return (
     <SandpackStack className={className}>
       <div
         className={cn(
-          'p-0 sm:p-2 md:p-4 lg:p-8 bg-card dark:bg-wash-dark h-full relative md:rounded-b-lg lg:rounded-b-none',
-          // Allow content to be scrolled if it's too high to fit.
-          // Note we don't want this in the expanded state
-          // because it breaks position: sticky (and isn't needed anyway).
-          !isExpanded && (error || bundlerIsReady) ? 'overflow-auto' : null
-        )}>
+          'p-4 bg-card dark:bg-wash-dark h-full relative rounded-lg',
+        )}
+        style={{
+          position: 'relative',
+          zIndex: 1
+        }}>
         <div style={iframeWrapperPosition()}>
           <iframe
             ref={iframeRef}
             className={cn(
-              'rounded-t-none bg-white md:shadow-md sm:rounded-lg w-full max-w-full transition-opacity',
-              // We can't *actually* hide content because that would
-              // break calculating the computed height in the iframe
-              // (which we're using for autosizing). This is noticeable
-              // if you make a compiler error and then fix it with code
-              // that expands the content. You want to measure that.
+              'rounded-lg bg-white shadow-md w-full max-w-full transition-opacity',
               hideContent
                 ? 'absolute opacity-0 pointer-events-none duration-75'
                 : 'opacity-100 duration-150'
@@ -169,7 +164,7 @@ export function Preview({
             title="Sandbox Preview"
             style={{
               height: iframeComputedHeight || '15px',
-              zIndex: isExpanded ? 'initial' : -1,
+              zIndex: 1,
             }}
           />
         </div>
@@ -178,9 +173,7 @@ export function Preview({
           <div
             className={cn(
               'z-50',
-              // This isn't absolutely positioned so that
-              // the errors can also expand the parent height.
-              isExpanded ? 'sticky top-8 ' : null
+              'sticky top-8'
             )}>
             <ErrorMessage error={error} />
           </div>

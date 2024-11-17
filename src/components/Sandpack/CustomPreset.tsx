@@ -1,8 +1,8 @@
 /*
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
-import {memo, useRef, useState} from 'react';
-import {flushSync} from 'react-dom';
+import { memo, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import {
   useSandpack,
   useActiveCode,
@@ -11,8 +11,8 @@ import {
 } from '@codesandbox/sandpack-react/unstyled';
 import cn from 'classnames';
 
-import {NavigationBar} from './NavigationBar';
-import {Preview} from './Preview';
+import { NavigationBar } from './NavigationBar';
+import { Preview } from './Preview';
 
 
 export const CustomPreset = memo(function CustomPreset({
@@ -20,10 +20,10 @@ export const CustomPreset = memo(function CustomPreset({
 }: {
   providedFiles: Array<string>;
 }) {
-  const {sandpack} = useSandpack();
-  const {code} = useActiveCode();
-  const {activeFile} = sandpack;
-  const lineCountRef = useRef<{[key: string]: number}>({});
+  const { sandpack } = useSandpack();
+  const { code } = useActiveCode();
+  const { activeFile } = sandpack;
+  const lineCountRef = useRef<{ [key: string]: number }>({});
   if (!lineCountRef.current[activeFile]) {
     lineCountRef.current[activeFile] = code.split('\n').length;
   }
@@ -56,12 +56,11 @@ const SandboxShell = memo(function SandboxShell({
         <NavigationBar providedFiles={providedFiles} />
         <SandpackLayout
           className={cn(
-           'sp-layout-expanded'
+            'sp-layout-expanded'
           )}>
           <Editor />
           <Preview
             className="order-last xl:order-2"
-            isExpanded
           />
 
         </SandpackLayout>
