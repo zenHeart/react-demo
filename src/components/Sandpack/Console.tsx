@@ -178,7 +178,7 @@ export const SandpackConsole = ({ visible }: { visible: boolean }) => {
 
       <div
         ref={wrapperRef}
-        className="overflow-y-auto h-[calc(100%-2rem)]">
+        className="overflow-y-auto h-[calc(100%-2rem)] bg-white dark:bg-gray-95 gray-95">
         <div>
           {logs.map(({ data, id, method }) => (
             <div

@@ -141,10 +141,7 @@ export function Preview({
 
   const previewStyles = {
     wrapper: {
-      flex: 1,
       overflow: 'auto',
-      height: '100vh',
-      padding: '1rem',
     }
   };
 
@@ -161,9 +158,6 @@ export function Preview({
           )}
           style={{
             overflow: 'auto',
-            maxHeight: '80vh',
-            padding: '1rem',
-            willChange: 'transform'
           }}>
           <div style={iframeWrapperPosition()}>
             <iframe
@@ -176,8 +170,8 @@ export function Preview({
               )}
               title="Sandbox Preview"
               style={{
-                height: iframeComputedHeight || '150px',
-                minHeight: '150px',
+                height: iframeComputedHeight || 'calc(100vh - 40px)',
+                maxHeight: 'calc(100vh - 40px)',
                 zIndex: 1,
               }}
             />
