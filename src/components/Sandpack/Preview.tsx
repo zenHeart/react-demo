@@ -132,20 +132,20 @@ export function Preview({
       return { position: 'relative' };
     }
 
-
     return {
       position: 'sticky',
       top: '1rem',
-      zIndex: 10
+      zIndex: 10,
     };
-
   };
 
   return (
     <SandpackStack className={className}>
       <div className="bg-card dark:bg-wash-dark h-full relative rounded-lg" style={{
         overflow: 'auto',
-        position: 'relative'
+        position: 'relative',
+        maxHeight: '80vh',
+        padding: '1rem'
       }}>
         <div style={iframeWrapperPosition()}>
           <iframe
@@ -166,11 +166,7 @@ export function Preview({
         </div>
 
         {error && (
-          <div
-            className={cn(
-              'z-50',
-              'sticky top-8'
-            )}>
+          <div className="z-50 sticky top-8">
             <ErrorMessage error={error} />
           </div>
         )}
