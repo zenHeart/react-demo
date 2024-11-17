@@ -148,9 +148,6 @@ export function getFlatComponents(): Component[] {
       .replace(/\.demo\.\w+$/, '');
     const componentMetaInfo = extractComponentMetaInfo(componentType, DemoComponent);
     const sandpackComponent = wrapDemoWithSandpack(componentType, rawContent, filename, rawFilesMap);
-    if (filename.endsWith('theory/jsx.demo.html')) {
-      debugger
-    }
     flatComponents.push({
       ...componentMetaInfo,
       name,

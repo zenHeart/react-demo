@@ -1,8 +1,7 @@
 /*
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
-import { memo, useRef, useState } from 'react';
-import { flushSync } from 'react-dom';
+import { memo, useRef } from 'react';
 import {
   useSandpack,
   useActiveCode,

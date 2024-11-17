@@ -148,18 +148,23 @@ export const SandpackConsole = ({ visible }: { visible: boolean }) => {
   }
 
   return (
-    <div className="absolute dark:border-gray-700 bg-white dark:bg-gray-95 border-t bottom-0 w-full dark:text-white">
-      <div className="flex justify-between">
-        <button className="flex items-center p-1">
-          <span className="ps-1 text-sm">Console ({logs.length})</span>
-        </button>
+    <div
+      className="absolute bottom-0 left-0 right-0 dark:border-gray-700 bg-white dark:bg-gray-95 border-t z-10"
+      style={{
+        maxHeight: '40%', // Percentage of parent height
+        minHeight: '6rem'
+      }}>
+      <div className="flex justify-between items-center h-8 px-2 border-b dark:border-gray-700">
+        <div className="flex items-center">
+          <span className="text-sm">Console ({logs.length})</span>
+        </div>
         <button
-          className="p-1"
+          className="p-1 hover:opacity-80"
           onClick={clearLogs}>
           <svg
             viewBox="0 0 24 24"
-            width="18"
-            height="18"
+            width="16"
+            height="16"
             stroke="currentColor"
             strokeWidth="2"
             fill="none"
@@ -173,13 +178,12 @@ export const SandpackConsole = ({ visible }: { visible: boolean }) => {
 
       <div
         ref={wrapperRef}
-        className="border-t dark:border-gray-700 overflow-auto"
-        style={{ maxHeight: '20rem', minHeight: '3rem' }}>
-        <div className="divide-y divide-gray-100 dark:divide-gray-700">
+        className="overflow-y-auto h-[calc(100%-2rem)]">
+        <div>
           {logs.map(({ data, id, method }) => (
             <div
               key={id}
-              className={cn('px-4 py-2 font-mono text-sm')}>
+              className="px-4 py-1.5 font-mono text-sm border-b last:border-b-0 dark:border-gray-700">
               {data.map((msg, i) => (
                 <span
                   key={i}

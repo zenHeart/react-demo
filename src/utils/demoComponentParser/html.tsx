@@ -57,10 +57,6 @@ export function parseMultiFileContent(
 ): Record<string, string> {
     const files: Record<string, string> = {};
     files['index.html'] = componentString;
-    if (filename.endsWith("theory/jsx.demo.html")) {
-        debugger;
-    }
-
     const imports = extractLocalJsTag(componentString);
     imports.forEach(importPath => {
         const resolvedPath = resolveFilePath(importPath, filename);
@@ -95,9 +91,6 @@ export function convertToSandpackFormat(
 ) {
     // Parse files
     const files = parseMultiFileContent(component, filename, rawFilesMap);
-    if (filename.endsWith('theory/jsx.demo.html')) {
-        debugger
-    }
     return function SandpackWrapper() {
         // Convert files object to Sandpack format
         const sandpackFiles: Record<string, { code: string }> = {};
