@@ -114,7 +114,20 @@ export function NavigationBar({ providedFiles }: { providedFiles: Array<string> 
   };
 
   return (
-    <div className="bg-wash dark:bg-card-dark flex justify-between items-center relative z-10 border-b border-border dark:border-border-dark rounded-t-lg text-lg">
+    <div
+      style={{
+        position: 'sticky',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: '40px',
+        backgroundColor: 'var(--bg-secondary)',
+        borderBottom: '1px solid var(--border-color)',
+        zIndex: 20,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      }}>
       <div className="flex-1 grow min-w-0 px-4 lg:px-6">
         <Listbox value={activeFile} onChange={setActiveFile}>
           <div ref={containerRef}>
@@ -179,9 +192,7 @@ export function NavigationBar({ providedFiles }: { providedFiles: Array<string> 
           )}
         </Listbox>
       </div>
-      <div
-        className="px-3 flex items-center justify-end text-start"
-        translate="yes">
+      <div className="px-3 flex items-center justify-end text-start" translate="yes">
         <DownloadButton providedFiles={providedFiles} />
         <ResetButton onReset={handleReset} />
         <OpenInCodeSandboxButton />

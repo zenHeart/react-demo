@@ -143,14 +143,10 @@ export function Preview({
 
   return (
     <SandpackStack className={className}>
-      <div
-        className={cn(
-          'p-4 bg-card dark:bg-wash-dark h-full relative rounded-lg',
-        )}
-        style={{
-          position: 'relative',
-          zIndex: 1
-        }}>
+      <div className="bg-card dark:bg-wash-dark h-full relative rounded-lg" style={{
+        overflow: 'auto',
+        position: 'relative'
+      }}>
         <div style={iframeWrapperPosition()}>
           <iframe
             ref={iframeRef}
