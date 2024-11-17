@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
-// const HelloWorld = React.lazy(() => import('./HelloWorld'))
-import HelloWorld from './HelloWorld'
+const HelloWorld = React.lazy(() => import('./HelloWorld.jsx'))
+import HelloWorld1 from './HelloWorld.jsx'
 
 function ClassComponent() {
   return (
@@ -48,6 +48,5 @@ class ShowAsync extends React.Component {
   }
 }
 
-ClassComponent.text = '懒加载组件'
 
 export default ClassComponent

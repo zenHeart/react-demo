@@ -1,4 +1,4 @@
-import Sandpack from '../components/Sandpack/index'
+import Sandpack from '@/components/Sandpack/index'
 
 function SandpackDemoTest() {
   return <Sandpack>
@@ -7,6 +7,7 @@ function SandpackDemoTest() {
         {
           `
          import { getImageUrl } from './utils.js';
+         import { Hello } from './hello.jsx';
 
 function Avatar({ person, size }) {
   return (
@@ -23,6 +24,7 @@ function Avatar({ person, size }) {
 export default function Profile() {
   return (
     <div>
+        <Hello/>
       <Avatar
         size={100}
         person={{ 
@@ -53,7 +55,14 @@ export default function Profile() {
       </code>
     </pre>
     <pre>
-      <code meta="src/utils.js" className="language-js">
+      <code meta="src/hello.jsx" className="language-jsx">
+        {
+          "export function Hello() { return <h1>hello</h1> }"
+        }
+      </code>
+    </pre>
+    <pre>
+      <code meta="src/utils.js" className="language-ts">
         {
           "export function getImageUrl(person, size = 's') {\n  return (\n    'https://i.imgur.com/' +\n    person.imageId +\n    size +\n    '.jpg'\n  );\n}\n"
         }
@@ -70,6 +79,9 @@ export default function Profile() {
     </pre>
 
   </Sandpack>
+}
+SandpackDemoTest.meta = {
+  disableSandpack: true
 }
 
 export default SandpackDemoTest

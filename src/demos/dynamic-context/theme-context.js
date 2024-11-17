@@ -12,4 +12,4 @@ export const themes = {
   }
 }
 
-export default   React.createContext(themes.light)
+export default React.createContext(themes.light)

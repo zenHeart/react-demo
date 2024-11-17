@@ -57,7 +57,7 @@ function createRawFilesMap(demosRaw: Record<string, string>): Record<string, str
     const normalizedPath = path.replace(/^\.\/demos\//, '');
     rawFilesMap[normalizedPath] = content as string;
   });
-
+  debugger
   return rawFilesMap;
 }
 
@@ -81,7 +81,7 @@ function findMatchingFile(resolvedPath: string, rawFilesMap: Record<string, stri
   const availablePaths = Object.keys(rawFilesMap);
 
   // Try different extensions
-  const possibleExtensions = ['', '.tsx', '.jsx', '.js', '.ts'];
+  const possibleExtensions = [''];
 
   // Find a matching file path
   return availablePaths.find(filePath => {
@@ -101,10 +101,6 @@ function parseMultiFileContent(
   files['App.js'] = componentString;
 
   const imports = extractLocalImports(componentString);
-  if (filename.includes('LazyComponent')) {
-    debugger
-  }
-
   imports.forEach(importPath => {
     const resolvedPath = resolveFilePath(importPath, filename);
 
@@ -113,20 +109,8 @@ function parseMultiFileContent(
 
     if (foundFile && rawFilesMap[foundFile]) {
       const foundContent = rawFilesMap[foundFile];
-
-      // Clean up the imported file content
-      let cleanedCode = foundContent
-        .replace(/import\s+.*?\n/g, '')
-        .replace(/export\s+default\s+/, '')
-        .trim();
-
       // Add proper export
-      files[`${importPath}.tsx`] = cleanedCode.startsWith('function') || cleanedCode.startsWith('class')
-        ? `export default ${cleanedCode}`
-        : `export default function Component() {
-            return (${cleanedCode})
-          }`;
-
+      files[`${importPath}`] = foundContent
       // Process nested imports
       const nestedFiles = parseMultiFileContent(foundContent, foundFile, rawFilesMap);
       Object.entries(nestedFiles).forEach(([path, code]) => {
@@ -168,7 +152,7 @@ export function mountComponents() {
       .replace(/\.demo\.\w+$/, '');
 
     let component = componentConfig;
-    let htmlInfo = {};
+    let htmlInfo: any = {};
 
     if (filename.endsWith('.html')) {
       htmlInfo = parserHtml(component as string);
@@ -180,11 +164,12 @@ export function mountComponents() {
       });
     } else {
       htmlInfo = (component as ComponentWithMeta).meta || {};
+
       const sandpackComponent = convertToSandpackFormat(rawContent, filename, rawFilesMap);
 
       flatComponents.push({
         name,
-        component: sandpackComponent,
+        component: htmlInfo?.disableSandpack ? component : sandpackComponent,
         ...htmlInfo,
         id: index
       });
@@ -201,23 +186,47 @@ function convertToSandpackFormat(
 ) {
   // Parse files
   const files = parseMultiFileContent(component, filename, rawFilesMap);
+  if (filename.includes('dynamic-context')) {
+    debugger
+  }
 
   return function SandpackWrapper() {
-    return (
+    // Convert files object to Sandpack format
+    const sandpackFiles: Record<string, { code: string }> = {};
+
+    // Always ensure App.js exists and is the main entry
+    sandpackFiles['App.js'] = { code: files['App.js'] };
+
+    // Add other files with proper paths
+    Object.entries(files).forEach(([path, code]) => {
+      if (path !== 'App.js') {
+        // Convert relative paths to absolute paths
+        const absolutePath = path.startsWith('.')
+          ? path.replace('./', 'src/').replace('.tsx', '.js')
+          : `src/${path.replace('.tsx', '.js')}`;
+
+        sandpackFiles[absolutePath] = { code };
+      }
+    });
+
+
+    const Component = (
       <Sandpack>
-        {Object.entries(files).map(([path, code]) => (
-          <pre key={path}>
-            <code
-              className="language-js"
-              meta={path !== 'App.js' ? path : undefined}
-              {...({} as CodeProps)}
-            >
-              {code}
-            </code>
-          </pre>
-        ))}
+        {
+          Object.entries(sandpackFiles).map(([path, info]) => (
+            <pre key={path}>
+              <code
+                className="language-js"
+                {...(path !== 'App.js' ? { meta: path } : {})}
+              >
+                {info.code}
+              </code>
+            </pre>
+          ))
+        }
       </Sandpack>
     );
+    return Component;
   }
 }
 
