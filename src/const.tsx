@@ -268,27 +268,58 @@ function createNestedStructure(components: Component[]): NestedComponent[] {
 
   components.forEach(component => {
     const paths = component.name.split('/');
-    const fileName = paths.pop()!;
-    let currentLevel = result;
 
-    paths.forEach(path => {
-      let found = currentLevel.find(item => item.name === path);
-      if (!found) {
-        found = {
-          name: path,
-          children: [],
-          id: Math.random(),
-          component: null
-        };
-        currentLevel.push(found);
-      }
-      currentLevel = found.children!;
-    });
+    // Handle index files differently
+    if (paths[paths.length - 1] === 'index') {
+      // Remove 'index' and use parent directory name
+      paths.pop();
+      const fileName = paths.pop()!;
+      let currentLevel = result;
 
-    currentLevel.push({
-      ...component,
-      name: fileName
-    });
+      // Process any remaining path segments
+      paths.forEach(path => {
+        let found = currentLevel.find(item => item.name === path);
+        if (!found) {
+          found = {
+            name: path,
+            children: [],
+            id: Math.random(),
+            component: null
+          };
+          currentLevel.push(found);
+        }
+        currentLevel = found.children!;
+      });
+
+      // Add component with parent directory name
+      currentLevel.push({
+        ...component,
+        name: fileName
+      });
+    } else {
+      // Handle non-index files normally
+      const fileName = paths.pop()!;
+      let currentLevel = result;
+
+      paths.forEach(path => {
+        let found = currentLevel.find(item => item.name === path);
+        if (!found) {
+          found = {
+            name: path,
+            children: [],
+            id: Math.random(),
+            component: null
+          };
+          currentLevel.push(found);
+        }
+        currentLevel = found.children!;
+      });
+
+      currentLevel.push({
+        ...component,
+        name: fileName
+      });
+    }
   });
 
   return result;

@@ -121,6 +121,9 @@ const styles = {
     flex: 1,
     backgroundColor: '#fff',
     overflowY: 'auto' as const,
+    display: 'sticky' as const,
+    top: 0,
+    height: '100vh',
   },
   globalStyles: {
     body: {
