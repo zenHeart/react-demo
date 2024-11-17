@@ -71,6 +71,8 @@ function SandpackRoot(props: SandpackProps) {
   const codeSnippets = Children.toArray(children) as React.ReactElement[];
   const files = createFileMap(codeSnippets);
 
+  const isHtmlDemo = files['/index.html'] !== undefined;
+
   files['/src/styles.css'] = {
     code: [sandboxStyle, files['/src/styles.css']?.code ?? ''].join('\n\n'),
     hidden: !files['/src/styles.css']?.visible,
@@ -79,10 +81,10 @@ function SandpackRoot(props: SandpackProps) {
   return (
     <div className="sandpack sandpack--playground w-full" dir="ltr">
       <SandpackProvider
-        files={{ ...template, ...files }}
+        files={{ ...(isHtmlDemo ? {} : template), ...files }}
         theme={CustomTheme}
         customSetup={{
-          environment: 'create-react-app',
+          environment: isHtmlDemo ? 'static' : 'create-react-app',
         }}
         options={{
           autorun,

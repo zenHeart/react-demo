@@ -2,7 +2,7 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
-import type {SandpackFile} from '@codesandbox/sandpack-react/unstyled';
+import type { SandpackFile } from '@codesandbox/sandpack-react/unstyled';
 
 export const AppJSPath = `/src/App.js`;
 export const StylesCSSPath = `/src/styles.css`;
@@ -11,19 +11,31 @@ export const SUPPORTED_FILES = [AppJSPath, StylesCSSPath];
 export const createFileMap = (codeSnippets: any) => {
   return codeSnippets.reduce(
     (result: Record<string, SandpackFile>, codeSnippet: React.ReactElement) => {
-
       if (
         (codeSnippet.type as any).mdxName !== 'pre' &&
         codeSnippet.type !== 'pre'
       ) {
         return result;
       }
-      const {props} = codeSnippet.props.children;
-      let filePath; // path in the folder structure
-      let fileHidden = false; // if the file is available as a tab
-      let fileActive = false; // if the file tab is shown by default
 
-      if (props.meta) {
+      const { props } = codeSnippet.props.children;
+      let filePath;
+      let fileHidden = false;
+      let fileActive = false;
+
+      if (props.className === 'language-html') {
+        filePath = '/index.html';
+        fileActive = true;
+
+        result['/package.json'] = {
+          code: JSON.stringify({
+            name: "static-html",
+            main: "/index.html",
+            dependencies: {}
+          }),
+          hidden: true
+        };
+      } else if (props.meta) {
         const [name, ...params] = props.meta.split(' ');
         filePath = '/' + name;
         if (params.includes('hidden')) {
@@ -49,6 +61,7 @@ export const createFileMap = (codeSnippets: any) => {
           `File ${filePath} was defined multiple times. Each file snippet should have a unique path name`
         );
       }
+
       result[filePath] = {
         code: (props.children || '') as string,
         hidden: fileHidden,
