@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite --host",
     "build": "tsc && vite build --base=/learn-react/",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "./scripts/deploy.sh"
   },
   "dependencies": {
     "@babel/core": "^7.26.0",
