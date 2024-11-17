@@ -53,10 +53,7 @@ const SandboxShell = memo(function SandboxShell({
           contain: 'content',
         }}>
         <NavigationBar providedFiles={providedFiles} />
-        <SandpackLayout
-          className={cn(
-            'sp-layout-expanded'
-          )}>
+        <SandpackLayout>
           <Editor />
           <Preview
             className="order-last xl:order-2"

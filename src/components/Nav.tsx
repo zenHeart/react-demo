@@ -5,14 +5,14 @@ import Tags from './Tags'
 const styles = {
   layout: {
     display: 'flex',
-    minHeight: '100vh',
+    height: '100vh',
+    overflow: 'hidden',
   },
   sidebar: {
     borderRight: '1px solid var(--border-color)',
     backgroundColor: 'var(--bg-secondary)',
-    overflowY: 'auto' as const,
+    height: '100vh',
     position: 'relative' as const,
-    height: '100vh'
   },
   sidebarExpanded: {
     width: '300px',
@@ -59,10 +59,9 @@ const styles = {
   content: {
     flex: 1,
     backgroundColor: 'var(--bg-primary)',
-    overflowY: 'auto' as const,
-    display: 'sticky' as const,
-    top: 0,
     height: '100vh',
+    display: 'flex',
+    overflow: 'hidden',
   },
   navContent: {
     overflowY: 'auto' as const,
@@ -343,9 +342,7 @@ function Nav({ children, tagsColor }: { children: NavItem[], tagsColor: string }
           </ul>
         </div>
       </nav>
-      <main style={{
-        ...styles.content,
-      }}>
+      <main style={styles.content}>
         <Routes>
           {flattenRoutes(children).map(({ path, component }) => (
             <Route

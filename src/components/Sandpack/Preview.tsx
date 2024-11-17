@@ -139,43 +139,62 @@ export function Preview({
     };
   };
 
+  const previewStyles = {
+    wrapper: {
+      flex: 1,
+      overflow: 'auto',
+      height: '100vh',
+      padding: '1rem',
+    }
+  };
+
   return (
-    <SandpackStack className={className}>
-      <div className="bg-card dark:bg-wash-dark h-full relative rounded-lg" style={{
-        overflow: 'auto',
-        position: 'relative',
-        maxHeight: '80vh',
-        padding: '1rem'
-      }}>
-        <div style={iframeWrapperPosition()}>
-          <iframe
-            ref={iframeRef}
-            className={cn(
-              'rounded-lg bg-white shadow-md w-full max-w-full transition-opacity',
-              hideContent
-                ? 'absolute opacity-0 pointer-events-none duration-75'
-                : 'opacity-100 duration-150'
-            )}
-            title="Sandbox Preview"
-            style={{
-              height: iframeComputedHeight || '150px',
-              minHeight: '150px',
-              zIndex: 1,
-            }}
+    <SandpackStack
+      className={cn(
+        className,
+      )}>
+      <div style={previewStyles.wrapper}>
+        <div
+          className={cn(
+            "bg-card dark:bg-wash-dark h-full relative rounded-lg",
+            "transform-gpu"
+          )}
+          style={{
+            overflow: 'auto',
+            maxHeight: '80vh',
+            padding: '1rem',
+            willChange: 'transform'
+          }}>
+          <div style={iframeWrapperPosition()}>
+            <iframe
+              ref={iframeRef}
+              className={cn(
+                'rounded-lg bg-white shadow-md w-full max-w-full transition-opacity',
+                hideContent
+                  ? 'absolute opacity-0 pointer-events-none duration-75'
+                  : 'opacity-100 duration-150'
+              )}
+              title="Sandbox Preview"
+              style={{
+                height: iframeComputedHeight || '150px',
+                minHeight: '150px',
+                zIndex: 1,
+              }}
+            />
+          </div>
+
+          {error && (
+            <div className="z-50 sticky top-8">
+              <ErrorMessage error={error} />
+            </div>
+          )}
+
+          <LoadingOverlay
+            clientId={clientId}
+            dependenciesLoading={!bundlerIsReady && iframeComputedHeight === null}
+            forceLoading={showLoading}
           />
         </div>
-
-        {error && (
-          <div className="z-50 sticky top-8">
-            <ErrorMessage error={error} />
-          </div>
-        )}
-
-        <LoadingOverlay
-          clientId={clientId}
-          dependenciesLoading={!bundlerIsReady && iframeComputedHeight === null}
-          forceLoading={showLoading}
-        />
       </div>
       <SandpackConsole visible={true} />
     </SandpackStack>

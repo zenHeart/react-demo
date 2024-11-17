@@ -479,7 +479,7 @@ html.dark .sandpack--playground .sp-overlay {
   min-width: 431px;
   /* No min height on mobile because we know code in advance. */
   /* Max height is needed to avoid too long files. */
-  max-height: 40vh;
+  max-height: calc(100vh - 40px);
 }
 
 .sandpack .sp-layout>.sp-stack:nth-child(2) {
@@ -487,8 +487,8 @@ html.dark .sandpack--playground .sp-overlay {
   min-width: 431px;
   /* Keep preview a fixed size on mobile to avoid jumps. */
   /* This is because we don't know its content in advance. */
-  min-height: 40vh;
-  max-height: 40vh;
+  min-height: calc(100vh - 40px);
+  max-height: calc(100vh - 40px);
 }
 
 .sandpack .sp-layout.sp-layout-expanded>.sp-stack:nth-child(1) {
@@ -508,14 +508,15 @@ html.dark .sandpack--playground .sp-overlay {
     /* On desktop, clamp height by pixels instead. */
     height: auto;
     min-height: unset;
-    max-height: 406px;
+    max-height: calc(100vh - 40px);
   }
 
   .sandpack .sp-layout>.sp-stack:nth-child(2) {
     /* On desktop, clamp height by pixels instead. */
     height: auto;
     min-height: unset;
-    max-height: 406px;
+    max-height: calc(100vh - 40px);
+    overflow: auto;
   }
 
   .sandpack .sp-layout.sp-layout-expanded>.sp-stack:nth-child(1) {

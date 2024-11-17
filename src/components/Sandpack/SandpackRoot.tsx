@@ -79,7 +79,7 @@ function SandpackRoot(props: SandpackProps) {
   };
 
   return (
-    <div className="sandpack sandpack--playground w-full" dir="ltr">
+    <div className="sandpack sandpack--playground w-full h-[calc(100vh-40px)] flex" dir="ltr">
       <SandpackProvider
         files={{ ...(isHtmlDemo ? {} : template), ...files }}
         theme={CustomTheme}
