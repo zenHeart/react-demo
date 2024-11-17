@@ -224,6 +224,7 @@ function Nav({ children, tagsColor }) {
       .map(item => {
         const currentPath = parentPath ? `${parentPath}/${item.name}` : item.name;
         const itemTags = item.tags || [];
+        const isExpanded = expandedGroups.includes(item.name);
 
         if (item.children) {
           const filteredChildren = item.children.filter(matchesFilter);
@@ -231,8 +232,24 @@ function Nav({ children, tagsColor }) {
 
           return (
             <div key={item.name} style={styles.navSection}>
-              <div style={styles.navSectionTitle}>{item.name}</div>
-              <ul style={styles.navList}>
+              <div
+                style={{
+                  ...styles.navSectionTitle,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between'
+                }}
+                onClick={() => toggleGroup(item.name)}
+              >
+                {item.name}
+                <ChevronIcon expanded={isExpanded} />
+              </div>
+              <ul style={{
+                ...styles.navList,
+                display: isExpanded ? 'block' : 'none',
+                transition: 'all 0.3s ease'
+              }}>
                 {renderNavItems(item.children, item.name)}
               </ul>
             </div>

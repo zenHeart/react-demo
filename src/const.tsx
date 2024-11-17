@@ -57,7 +57,6 @@ function createRawFilesMap(demosRaw: Record<string, string>): Record<string, str
     const normalizedPath = path.replace(/^\.\/demos\//, '');
     rawFilesMap[normalizedPath] = content as string;
   });
-  debugger
   return rawFilesMap;
 }
 
@@ -186,10 +185,6 @@ function convertToSandpackFormat(
 ) {
   // Parse files
   const files = parseMultiFileContent(component, filename, rawFilesMap);
-  if (filename.includes('dynamic-context')) {
-    debugger
-  }
-
   return function SandpackWrapper() {
     // Convert files object to Sandpack format
     const sandpackFiles: Record<string, { code: string }> = {};
