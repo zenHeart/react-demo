@@ -13,6 +13,7 @@ const styles = {
     display: 'inline-flex',
     alignItems: 'center',
     gap: '4px',
+    marginLeft: '0.5rem',
   },
   tag: {
     display: 'inline-flex',
