@@ -94,12 +94,6 @@ function SandpackRoot(props: SandpackProps) {
             "https://preview.sandpack-static-server.codesandbox.io" :
             "https://786946de.sandpack-bundler-4bw.pages.dev",
           logLevel: SandpackLogLevel.None,
-          showConsole: true,
-          showConsoleButton: true,
-          showNavigator: true,
-          showTabs: true,
-          closableTabs: true,
-          initMode: "immediate",
           externalResources: isHtmlDemo ? [
             "https://unpkg.com/react@16/umd/react.development.js",
             "https://unpkg.com/react-dom@16/umd/react-dom.development.js"

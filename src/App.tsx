@@ -1,5 +1,5 @@
 import { HashRouter as Router } from 'react-router-dom';
-import { COMPONENTS, TAGS_COLOR } from './const'
+import { TREE_COMPONENTS, TAGS_COLOR } from './const'
 import Nav from './components/Nav';
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
     <div className="App">
       <Router>
         {/* @ts-ignore */}
-        <Nav children={COMPONENTS} tagsColor={TAGS_COLOR}></Nav>
+        <Nav children={TREE_COMPONENTS} tagsColor={TAGS_COLOR}></Nav>
       </Router>
     </div>
   )

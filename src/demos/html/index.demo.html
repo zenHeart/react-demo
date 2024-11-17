@@ -1,0 +1,25 @@
+---
+tags: [ theory, jsx]
+---
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="./script.js"></script>
+
+<div id="root"></div>
+<script>
+  // debug(document.createElement)
+  const { createElement }  = React
+  function App() {
+    return createElement(
+      'h1',
+      undefined,
+      'hello world'
+    )
+  }
+  let mountPoint = document.getElementById('root')
+  const root = ReactDOM.createRoot(mountPoint)
+  root.render(createElement(App))
+  // 查看是什么时候触发的 root 挂载数据
+  // debug(mountPoint.appendChild)
+</script>
