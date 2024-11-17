@@ -1,27 +1,49 @@
-import React from 'react';
-import './Tags.less'
-
 interface TagsProps {
-  tags: string[],
-  tagsColor: Record<string, string>,
-  onClickTag: Function
+  tags: string[];
+  tagsColor: Record<string, string>;
+  onClickTag: (tag: string) => void;
 }
 
-export default function Tags(props: React.PropsWithChildren<TagsProps> ) {
-  const jump = (e: any, tag: string) => {
-    e.stopPropagation();
-    e.preventDefault();
-    props.onClickTag(tag);
+const styles = {
+  tagsWrap: {
+    lineHeight: 0,
+    verticalAlign: 'top',
+    display: 'inline-block',
+  },
+  tag: {
+    display: 'inline-block',
+    fontSize: '14px',
+    height: '18px',
+    lineHeight: '18px',
+    borderRadius: '3px',
+    padding: '0 6px',
+    color: 'black',
+    verticalAlign: 'top',
+    marginRight: '5px',
+    cursor: 'pointer',
   }
-  return (
+};
 
-    props.tags?  <span className="tags-wrap">{props.tags.map(tag => (
-      <span
-        className="tag"
-        key={tag}
-        onClick={(e) => jump(e, tag)}
-        style={{
-          background:props.tagsColor[tag]
-        }
-        }>{ tag }</span> ))}</span>:null)
+function Tags({ tags, tagsColor, onClickTag }: TagsProps) {
+  return (
+    <span style={styles.tagsWrap}>
+      {tags.map((tag) => (
+        <span
+          key={tag}
+          style={{
+            ...styles.tag,
+            backgroundColor: tagsColor[tag] || '#eee',
+          }}
+          onClick={(e) => {
+            e.preventDefault();
+            onClickTag(tag);
+          }}
+        >
+          {tag}
+        </span>
+      ))}
+    </span>
+  );
 }
+
+export default Tags;
