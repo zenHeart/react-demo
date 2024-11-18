@@ -18,7 +18,6 @@ import {
 } from '@codesandbox/sandpack-react/unstyled';
 import { OpenInCodeSandboxButton } from './OpenInCodeSandboxButton';
 import { ResetButton } from './ResetButton';
-import { DownloadButton } from './DownloadButton';
 import { IconChevron } from './IconChevron';
 import { Listbox } from '@headlessui/react';
 import { OpenInTypeScriptPlaygroundButton } from './OpenInTypeScriptPlayground';
@@ -193,7 +192,6 @@ export function NavigationBar({ providedFiles }: { providedFiles: Array<string> 
         </Listbox>
       </div>
       <div className="px-3 flex items-center justify-end text-start" translate="yes">
-        <DownloadButton providedFiles={providedFiles} />
         <ResetButton onReset={handleReset} />
         <OpenInCodeSandboxButton />
         {activeFile.endsWith('.tsx') && (
