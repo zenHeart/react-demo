@@ -1,15 +1,20 @@
-# react 示例仓库
-采用 [Create React App](https://github.com/facebook/create-react-app) 初始化
+#  Learn React
+from scratch learn react by examples.
 
-## 基本流程
 
-```bash
-# 本地调试
-npm start # 访问 http://localhost:3000
-```
+## how to start
+just access <https://blog.zenheart.site/learn-react/> to learn by demo
 
-## 资料
-阅读
-- [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-- [React documentation](https://reactjs.org/).
+### run in local
+1. make sure has node env.
+2. make sure instal pnpm in global version > 9.x
+3. use `pnpm install`
+4. start project `pnpm dev` enjoy it
+
+
+## how it work
+reference [react.dev](https://github.com/reactjs/react.dev) code ,use the key [SandPack](https://github.com/reactjs/react.dev/tree/main/src/components/MDX/Sandpack) component to make editor mode work.you can read [sandpack](https://sandpack.codesandbox.io/docs) docs to leanr more.
+
+### file strucutre
+
 
