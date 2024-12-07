@@ -16,75 +16,20 @@ type SandpackProps = {
   autorun?: boolean;
 };
 
-const sandboxStyle = `
-* {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: sans-serif;
-  margin: 20px;
-  padding: 0;
-}
-
-h1 {
-  margin-top: 0;
-  font-size: 22px;
-}
-
-h2 {
-  margin-top: 0;
-  font-size: 20px;
-}
-
-h3 {
-  margin-top: 0;
-  font-size: 18px;
-}
-
-h4 {
-  margin-top: 0;
-  font-size: 16px;
-}
-
-h5 {
-  margin-top: 0;
-  font-size: 14px;
-}
-
-h6 {
-  margin-top: 0;
-  font-size: 12px;
-}
-
-code {
-  font-size: 1.2em;
-}
-
-ul {
-  padding-inline-start: 20px;
-}
-`.trim();
 
 function SandpackRoot(props: SandpackProps) {
   let { children, autorun = true } = props;
   const codeSnippets = Children.toArray(children) as React.ReactElement[];
   const files = createFileMap(codeSnippets);
 
-  const isHtmlDemo = files['/index.html'] !== undefined;
-
-  files['/src/styles.css'] = {
-    code: [sandboxStyle, files['/src/styles.css']?.code ?? ''].join('\n\n'),
-    hidden: !files['/src/styles.css']?.visible,
-  };
 
   return (
     <div className="sandpack sandpack--playground w-full h-[calc(100vh-40px)] flex" dir="ltr">
       <SandpackProvider
-        files={{ ...(isHtmlDemo ? {} : template), ...files }}
+        files={{ ... template, ...files }}
         theme={CustomTheme}
         customSetup={{
-          environment: isHtmlDemo ? 'static' : 'create-react-app',
+          environment: 'create-react-app',
           dependencies: { 
             "@codesandbox/sandpack-react": "latest" 
           }
@@ -93,9 +38,7 @@ function SandpackRoot(props: SandpackProps) {
           autorun,
           initMode: 'user-visible',
           initModeObserverOptions: { rootMargin: '1400px 0px' },
-          bundlerURL: isHtmlDemo ?
-            "https://preview.sandpack-static-server.codesandbox.io" :
-            "https://786946de.sandpack-bundler-4bw.pages.dev",
+          bundlerURL: 'https://sandpack-bundler.codesandbox.io',
           logLevel: SandpackLogLevel.None,
         }}>
         <CustomPreset providedFiles={Object.keys(files)} />
