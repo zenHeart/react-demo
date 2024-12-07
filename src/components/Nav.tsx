@@ -180,11 +180,11 @@ function Nav({ children, tagsColor }: { children: NavItem[], tagsColor: any }) {
     setSearchParams({ tag });
   }
 
-  const toggleGroup = (groupName: string) => {
+  const toggleGroup = (groupPath: string) => {
     setExpandedGroups(prev =>
-      prev.includes(groupName)
-        ? prev.filter(name => name !== groupName)
-        : [...prev, groupName]
+      prev.includes(groupPath)
+        ? prev.filter(path => !path.startsWith(groupPath))
+        : [...prev, groupPath]
     );
   }
 
@@ -200,44 +200,51 @@ function Nav({ children, tagsColor }: { children: NavItem[], tagsColor: any }) {
     return false;
   }
 
-  const renderNavItems = (items: NavItem[], parentPath = '') => {
+  const renderNavItems = (items: NavItem[], parentPath = '', level = 0) => {
     return items
       .filter(matchesFilter)
       .map(item => {
         const currentPath = parentPath ? `${parentPath}/${item.name}` : item.name;
         const itemTags = item.tags || [];
-        const isExpanded = expandedGroups.includes(item.name);
+        const isExpanded = expandedGroups.includes(currentPath);
 
         if (item.children) {
           const filteredChildren = item.children.filter(matchesFilter);
           if (filteredChildren.length === 0) return null;
 
           return (
-            <div key={item.name}>
+            <div key={currentPath} style={{ paddingLeft: `${level * 16}px` }}>
               <div
                 style={{
                   ...styles.navSectionTitle,
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'space-between'
+                  justifyContent: 'space-between',
+                  padding: '8px 12px',
                 }}
-                onClick={() => toggleGroup(item.name)}
+                onClick={() => toggleGroup(currentPath)}
               >
                 {item.name}
                 <ChevronIcon expanded={isExpanded} />
               </div>
               <ul style={{
                 display: isExpanded ? 'block' : 'none',
+                margin: 0,
+                padding: 0,
+                listStyle: 'none',
               }}>
-                {renderNavItems(item.children, item.name)}
+                {renderNavItems(item.children, currentPath, level + 1)}
               </ul>
             </div>
           );
         }
 
         return (
-          <li key={currentPath}>
+          <li key={currentPath} style={{
+            paddingLeft: `${level * 16}px`,
+            listStyle: 'none'
+          }}>
             <NavLink
               style={({ isActive }) => ({
                 ...styles.navLink,
@@ -247,7 +254,7 @@ function Nav({ children, tagsColor }: { children: NavItem[], tagsColor: any }) {
             >
               {item.name}
               {itemTags.length > 0 && (
-                <span >
+                <span style={{ marginLeft: '8px' }}>
                   <Tags onClickTag={handleTagChange} tagsColor={tagsColor} tags={itemTags} />
                 </span>
               )}
