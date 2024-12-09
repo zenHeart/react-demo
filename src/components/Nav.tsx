@@ -270,8 +270,19 @@ function Nav({ children, tagsColor }: { children: NavItem[], tagsColor: any }) {
       const currentPath = parentPath ? `${parentPath}/${item.name}` : item.name;
 
       if (item.children) {
-        return [...acc, ...flattenRoutes(item.children, item.name)];
+        // Include both the current item (if it has a component) and its children
+        const routes = [...flattenRoutes(item.children, currentPath)];
+        if (item.component) {
+          routes.unshift({
+            name: item.name,
+            path: currentPath,
+            component: item.component,
+            tags: item.tags || []
+          });
+        }
+        return [...acc, ...routes];
       }
+
       if (item.component) {
         return [...acc, {
           name: item.name,
@@ -284,10 +295,13 @@ function Nav({ children, tagsColor }: { children: NavItem[], tagsColor: any }) {
     }, [] as Array<{ name: string, path: string, component: any, tags: string[] }>);
   }
 
-  // Get first available route for redirect
+  // Update getFirstAvailableRoute to handle filtered routes
   const getFirstAvailableRoute = () => {
     const flatRoutes = flattenRoutes(children);
-    return flatRoutes[0]?.path || '/';
+    const filteredRoutes = filterTag
+      ? flatRoutes.filter(route => route.tags.includes(filterTag))
+      : flatRoutes;
+    return filteredRoutes[0]?.path || '/';
   };
 
   const toggleSidebar = () => {

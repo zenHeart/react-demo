@@ -487,8 +487,8 @@ html.dark .sandpack--playground .sp-overlay {
   min-width: 431px;
   /* Keep preview a fixed size on mobile to avoid jumps. */
   /* This is because we don't know its content in advance. */
-  min-height: calc(100vh - 40px);
-  max-height: calc(100vh - 40px);
+  /* min-height: calc(100vh - 40px);
+  max-height: calc(100vh - 40px); */
   overflow: auto;
 }
 
