@@ -271,16 +271,17 @@ function Nav({ children, tagsColor }: { children: NavItem[], tagsColor: any }) {
 
       if (item.children) {
         // Include both the current item (if it has a component) and its children
-        const routes = [...flattenRoutes(item.children, currentPath)];
-        if (item.component) {
-          routes.unshift({
-            name: item.name,
-            path: currentPath,
-            component: item.component,
-            tags: item.tags || []
-          });
-        }
-        return [...acc, ...routes];
+        // const routes = [...flattenRoutes(item.children, currentPath)];
+        // if (item.component) {
+        //   routes.unshift({
+        //     name: item.name,
+        //     path: currentPath,
+        //     component: item.component,
+        //     tags: item.tags || []
+        //   });
+        // }
+        // return [...acc, ...routes];
+        return [...acc, ...flattenRoutes(item.children, currentPath)];
       }
 
       if (item.component) {
